@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DiabetesManager</string>
+    <string name="home_button">Home</string>
+    <string name="activities_button">Activities</string>
+    <string name="statistics_button">Statistics</string>
+    <string name="reminders">Reminders:</string>
+</resources>

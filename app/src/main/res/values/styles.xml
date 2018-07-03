@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">@color/</item>
+    </style>
+    <!-- button style -->
+    <style name="buttonStyle" parent="Widget.AppCompat.Button">
+
+    </style>
+    <!-- text style -->
+    <style name="textStyle" parent="TextAppearance.AppCompat">
+        <item name="color">@color/textColor</item>
+    </style>
+    <!-- edit text style -->
+    <style name="editTextStyle" parent="TextAppearance.AppCompat">
+        <item name="color">@color/textColor</item>
+    </style>
+
+</resources>
