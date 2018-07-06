@@ -6,19 +6,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="backgroundColor">@color/</item>
+
     </style>
     <!-- button style -->
     <style name="buttonStyle" parent="Widget.AppCompat.Button">
-
+        <item name = "android:minWidth">110dp</item>
+        <item name = "android:minHeight">45dp</item>
+        <item name = "android:textStyle">bold</item>
     </style>
     <!-- text style -->
     <style name="textStyle" parent="TextAppearance.AppCompat">
-        <item name="color">@color/textColor</item>
+        <item name = "android:textColor">@color/textColor</item>
+        <item name = "android:fontFamily">sans-serif</item>
+        <item name = "android:textSize">18sp</item>
+
     </style>
     <!-- edit text style -->
     <style name="editTextStyle" parent="TextAppearance.AppCompat">
-        <item name="color">@color/textColor</item>
+        <item name = "android:textColor">@color/textColor</item>
+        <item name = "android:fontFamily">sans-serif</item>
+        <item name = "android:textSize">18sp</item>
     </style>
 
 </resources>
