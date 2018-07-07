@@ -9,10 +9,18 @@
 
     <!--Activity Form-->
     <string name="activity_form_title">Add An Activity</string>
-    <string name="activity_form_hint_title">Activity Title</string>
+    <string name="activity_form_hint_description">Activity Description</string>
     <string name="activity_form_hint_duration">Duration</string>
     <string name="activity_form_hint_heart_rate">Average Heart Rate</string>
     <string name="activity_form_hint_date">Date</string>
     <string name="activity_form_hint_time">Time</string>
     <string name="activity_form_add">Add</string>
+    <string name="activity_form_type">Activity Type:</string>
+
+    <!--Activity Spinner-->
+    <string-array name="activity_type_array">
+        <item>Diet</item>
+        <item>Exercise</item>
+        <item>Medication</item>
+    </string-array>
 </resources>
