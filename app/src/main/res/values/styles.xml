@@ -13,6 +13,12 @@
         <item name = "android:minWidth">110dp</item>
         <item name = "android:minHeight">45dp</item>
         <item name = "android:textStyle">bold</item>
+        <item name = "android:background">@color/colorAccent</item>
+        <item name = "android:textColor">@color/colorAccentText</item>
+        <item name = "android:bottomLeftRadius">1dp</item>
+        <item name = "android:bottomRightRadius">5dp</item>
+        <item name = "android:topLeftRadius">5dp</item>
+        <item name = "android:topRightRadius">1dp</item>
     </style>
     <!-- text style -->
     <style name="textStyle" parent="TextAppearance.AppCompat">
@@ -26,6 +32,11 @@
         <item name = "android:textColor">@color/textColor</item>
         <item name = "android:fontFamily">sans-serif</item>
         <item name = "android:textSize">18sp</item>
+    </style>
+
+    <style name="pageTitleStyle" parent="TextAppearance.AppCompat">
+        <item name = "android:textSize">24sp</item>
+        <item name = "android:textStyle">bold</item>
     </style>
 
 </resources>
