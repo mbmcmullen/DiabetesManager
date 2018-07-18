@@ -203,6 +203,7 @@
 
     <EditText
         android:id="@+id/fromText"
+        style="@style/editTextStyle"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -216,6 +217,7 @@
 
     <EditText
         android:id="@+id/keywordText"
+        style="@style/editTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
