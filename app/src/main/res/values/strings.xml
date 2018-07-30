@@ -6,6 +6,8 @@
     <string name="reminders">Reminders:</string>
     <string name="recent_activity">Recent Activities:</string>
     <string name="add_activity_button">Add New Activity</string>
+    <string name="regimen_button">regimen</string>
+
 
     <!--Activity Form-->
     <string name="activity_form_title">Add An Activity</string>
