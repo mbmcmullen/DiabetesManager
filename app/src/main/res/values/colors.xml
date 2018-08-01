@@ -6,4 +6,8 @@
     <color name="backgroundColor">@android:color/darker_gray</color>
     <color name="textColor">#000000</color>
     <color name="colorAccentText">#ffffff</color>
+    <color name="colorBGLItem">#910000</color>
+    <color name="colorDietItem">#098e00</color>
+    <color name="colorMedicationItem">#960057</color>
+    <color name="colorExerciseItem">#000796</color>
 </resources>
