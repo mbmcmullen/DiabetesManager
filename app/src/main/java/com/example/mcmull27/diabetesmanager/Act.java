@@ -3,13 +3,22 @@ package com.example.mcmull27.diabetesmanager;
 import java.util.Date;
 
 public class Act{
-    public int id;
-    public String type;
-    public String description;
-    public double amount;
-    public Date timestamp;
 
-    public Act(int id, String type, String description, double amount, Date timestamp){
+    public static final String DIET = "DIET";
+    public static final String EXERCISE = "EXERCISE";
+    public static final String MEDICATION = "MEDICATION";
+    public static final String BGL = "BGL";
+
+    private int id;
+    private String type;
+    private String description;
+    private double amount;
+    private String timestamp;
+
+    public Act(String type){
+        this.type = type;
+    }
+    public Act(int id, String type, String description, double amount, String timestamp){
         this.id = id;
         this.type = type;
         this.description = description;
@@ -17,7 +26,7 @@ public class Act{
         this.timestamp = timestamp;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -33,6 +42,8 @@ public class Act{
         return description;
     }
 
+    public int getId() { return id; }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
@@ -41,7 +52,11 @@ public class Act{
         this.description = description;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setType(String t){
+        type=t;
     }
 }

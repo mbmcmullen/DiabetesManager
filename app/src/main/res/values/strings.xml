@@ -1,11 +1,26 @@
 <resources>
     <string name="app_name">DiabetesManager</string>
+    <string name="reminders">Reminders:</string>
+    <string name="recent_activity">Recent Activities:</string>
+
+    <!--Navigation Button Labels-->
     <string name="home_button">Home</string>
     <string name="activities_button">Activities</string>
     <string name="statistics_button">Statistics</string>
-    <string name="reminders">Reminders:</string>
-    <string name="recent_activity">Recent Activities:</string>
     <string name="add_activity_button">Add New Activity</string>
+    <string name="regimen_button">regimen</string>
+
+    <!--Activity Form Recycler View-->
+    <string name="date_hint">Date (MM/DD/YYYY)</string>
+    <string name="time_hint">Time (HH:MM)</string>
+
+    <string name="description_hint">Description</string>
+    <string name="amount_hint">Amount</string>
+
+    <string name="bgl_label">BGL</string>
+    <string name="diet_label">Diet</string>
+    <string name="exercise_label">Exercise</string>
+    <string name="medication_label">Medication</string>
 
     <!--Activity Form-->
     <string name="activity_form_title">Add An Activity</string>
