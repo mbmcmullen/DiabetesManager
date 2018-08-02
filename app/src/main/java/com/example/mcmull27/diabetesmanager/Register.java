@@ -26,7 +26,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View v){
                 if(userName.getText()!= null && emailAddress.getText() != null && passWord.getText() != null){
 
-                    SharedPreferences myPrefs = getSharedPreferences("Prefences",MODE_PRIVATE);
+                    SharedPreferences myPrefs = getSharedPreferences("Preferences",MODE_PRIVATE);
                     String user = userName.getText().toString();
                     String email = emailAddress.getText().toString();
                     String pass = passWord.getText().toString();
