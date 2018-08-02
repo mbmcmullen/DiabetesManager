@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 
 public class SignIn extends AppCompatActivity {
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
 
@@ -31,7 +32,8 @@ public class SignIn extends AppCompatActivity {
 
                     SharedPreferences myPrefs = getSharedPreferences("Preferences" , MODE_PRIVATE);
                     String userDetails = myPrefs.getString(user + pass, "");
-
+                    System.out.println( userDetails);
+                    System.out.println( user + pass);
                     if(userDetails.equals(user + pass)){
                         Intent mainActivity = new Intent(SignIn.this, MainActivity.class);
                         startActivity(mainActivity);
