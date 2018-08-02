@@ -32,8 +32,7 @@ public class SignIn extends AppCompatActivity {
 
                     SharedPreferences myPrefs = getSharedPreferences("Preferences" , MODE_PRIVATE);
                     String userDetails = myPrefs.getString(user + pass, "Incorrect login");
-                    System.out.println( userDetails);
-                    System.out.println( user + pass);
+
                     if(userDetails.equals(user + pass)){
                         Intent mainActivity = new Intent(SignIn.this, MainActivity.class);
                         startActivity(mainActivity);

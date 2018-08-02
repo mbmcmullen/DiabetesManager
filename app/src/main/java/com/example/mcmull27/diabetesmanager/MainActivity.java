@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Login();
+
 
         //navigation bar
         findViewById(R.id.regimen_button).setOnClickListener(new View.OnClickListener() {
@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void Login(){
+
+    //make login apart of the menu bar as well as sign out?
+    public void Login(View v){
         Intent login = new Intent(this, SignIn.class);
         this.startActivity(login);
     }
