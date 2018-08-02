@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = myPrefs.edit();
 
-                    editor.putString(user + pass, user + "\n" + email);
+                    editor.putString(user + pass, user + pass);
                     editor.commit();
                     Toast.makeText(Register.this, "User successfully registered", Toast.LENGTH_SHORT ).show( );
 

@@ -31,7 +31,7 @@ public class SignIn extends AppCompatActivity {
                     String pass = passWord.getText().toString();
 
                     SharedPreferences myPrefs = getSharedPreferences("Preferences" , MODE_PRIVATE);
-                    String userDetails = myPrefs.getString(user + pass, "");
+                    String userDetails = myPrefs.getString(user + pass, "Incorrect login");
                     System.out.println( userDetails);
                     System.out.println( user + pass);
                     if(userDetails.equals(user + pass)){
