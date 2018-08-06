@@ -1,11 +1,13 @@
 package com.example.mcmull27.diabetesmanager;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 
@@ -89,55 +91,171 @@ public class ActivityAdapter extends
                 TextView label2 = vh3.getLabel();
                 label2.setText(R.string.medication_label);
                 vh3.itemView.setBackgroundResource(R.color.colorMedicationItem);
+                break;
         }
 
     }
 
+
     public class ViewHolderBGL extends RecyclerView.ViewHolder{
-            private TextView label;
-            private EditText date, time;
-            private SeekBar amount;
+        private TextView label;
+        private EditText date, time;
+        private EditText amount;
 
-            public ViewHolderBGL(View v){
-                super(v);
-                label = (TextView)v.findViewById(R.id.bgl_label);
-                date = (EditText)v.findViewById(R.id.item_date);
-                time = (EditText)v.findViewById(R.id.item_time);
-                amount = (SeekBar) v.findViewById(R.id.seekBar);
-            }
 
-            public TextView getLabel() { return label; }
+        public ViewHolderBGL(View v){
+            super(v);
+            label = (TextView)v.findViewById(R.id.bgl_label);
+            date = (EditText) v.findViewById(R.id.item_date);
+            time = (EditText) v.findViewById(R.id.item_time);
+            amount = (EditText) v.findViewById(R.id.item_amount);
 
-            public EditText getDate() { return date; }
+            date.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            public EditText getTime() { return time; }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            public void setLabel(TextView label){this.label = label;}
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+                    Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
+                }
+            });
+
+            time.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+                    Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
+                }
+            });
+
+            amount.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setAmount(Double.parseDouble(editable.toString()));
+                    Log.d("DATA UPDATE:"+getAdapterPosition()+" amount", editable.toString());
+                }
+            });
         }
 
-        public class ViewHolderAct extends RecyclerView.ViewHolder{
-            private TextView label;
-            private EditText description,amount,date,time;
+        public TextView getLabel() { return label; }
 
-            public ViewHolderAct(View v){
-                super(v);
-                label = (TextView)v.findViewById(R.id.label);
-                date = (EditText)v.findViewById(R.id.item_date);
-                time = (EditText)v.findViewById(R.id.item_time);
-            }
+        public EditText getDate() { return date; }
 
-            public TextView getLabel() { return label; }
+        public EditText getTime() { return time; }
 
-            public EditText getAmount() { return amount; }
+        public EditText getAmount() { return amount; }
 
-            public EditText getDescription() { return description; }
+        public void setLabel(TextView label){this.label = label;}
+    }
 
-            public EditText getDate() { return date; }
+    public class ViewHolderAct extends RecyclerView.ViewHolder {
+        private TextView label;
+        private EditText description, amount, date, time;
 
-            public EditText getTime() { return time; }
+        public ViewHolderAct(View v) {
+            super(v);
+            label = (TextView) v.findViewById(R.id.label);
+            date = (EditText) v.findViewById(R.id.item_date);
+            time = (EditText) v.findViewById(R.id.item_time);
+            description = (EditText) v.findViewById(R.id.item_description);
+            amount = (EditText) v.findViewById(R.id.item_amount);
 
-            public void setLabel(TextView label){this.label = label;}
+            date.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+                    Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
+                }
+            });
+
+            time.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+                    Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
+                }
+            });
+
+            amount.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setAmount(Double.parseDouble(editable.toString()));
+                    Log.d("DATA UPDATE:"+getAdapterPosition()+" amount", editable.toString());
+                }
+            });
+
+            description.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(getAdapterPosition()).setDescription(editable.toString());
+                    Log.d("DATA UPDATE;"+getAdapterPosition()+" desc", editable.toString());
+                }
+            });
         }
 
+        public TextView getLabel() {
+            return label;
+        }
+
+        public EditText getAmount() {
+            return amount;
+        }
+
+        public EditText getDescription() {
+            return description;
+        }
+
+        public EditText getDate() {
+            return date;
+        }
+
+        public EditText getTime() {
+            return time;
+        }
+
+        public void setLabel(TextView label) {
+            this.label = label;
+        }
+
+    }
 }

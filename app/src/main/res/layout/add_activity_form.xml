@@ -6,13 +6,67 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
+
+    <Button
+        android:id="@+id/button_bgl"
+        style="@style/SelectionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/bgl_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_diet"
+        app:layout_constraintEnd_toStartOf="@+id/button_exercise"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_diet" />
+
+    <Button
+        android:id="@+id/button_diet"
+        style="@style/SelectionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/diet_label"
+        app:layout_constraintEnd_toStartOf="@+id/button_bgl"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtActivityFormTitle" />
+
+    <Button
+        android:id="@+id/button_medication"
+        style="@style/SelectionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/medication_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_exercise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_exercise" />
+
+    <Button
+        android:id="@+id/button_exercise"
+        style="@style/SelectionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:text="@string/exercise_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_bgl"
+        app:layout_constraintEnd_toStartOf="@+id/button_medication"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_bgl" />
+
+
     <TextView
         android:id="@+id/txtActivityFormTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/pageTitleStyle"
+        app:layout_constraintBottom_toTopOf="@+id/button_bgl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/activity_form_title"
@@ -34,12 +88,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvActs"
         android:layout_width="match_parent"
-        android:layout_height="345dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btnAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_diet" />
 
 </android.support.constraint.ConstraintLayout>
