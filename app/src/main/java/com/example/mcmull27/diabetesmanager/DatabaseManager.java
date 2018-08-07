@@ -31,14 +31,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlcreate = "create table" + TABLE_ACTIVITIES + "(" + ID;
-        sqlcreate += "integer primary key autoincrement,"+ TYPE + " text, ";
+        String sqlcreate = "create table " + TABLE_ACTIVITIES + "(" + ID;
+        sqlcreate += " integer primary key autoincrement,"+ TYPE + " text, ";
         sqlcreate +=  DESCRIPTION+ " text, " + AMOUNT + " text, ";
         sqlcreate +=  TIMESTAMP+ " text)";
         db.execSQL(sqlcreate);
 
-        String sqlcreateReg = "create table" + TABLE_REGIMEN +"(" + ID;
-        sqlcreateReg += "integer primary key autoincrement,"+ TYPE + " text, ";
+        String sqlcreateReg = "create table " + TABLE_REGIMEN +"(" + ID;
+        sqlcreateReg += " integer primary key autoincrement,"+ TYPE + " text, ";
         sqlcreateReg +=  DESCRIPTION+ " text, " + AMOUNT + " text, ";
         sqlcreateReg +=  TIMESTAMP+ " text)";
         db.execSQL(sqlcreateReg);
@@ -193,5 +193,73 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cursor.close();
 
         return activities;
+    }
+
+    public ArrayList<Act> queryActs(String type, String toDate, String fromDate){
+        ArrayList<Act> stats = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String dateClause, typeClause;
+
+        //open query logic
+        if((fromDate.equalsIgnoreCase("") || fromDate == null) && (toDate.equalsIgnoreCase("") || toDate == null) && (type.equalsIgnoreCase("") || type == null))
+        {
+
+            stats = selectAllActs();
+        }
+        //conditional query - no before/after/between, or time ranges yet
+        else
+        {
+            //no type passed in
+            if(type == "" || type == null)
+            {
+                typeClause = " where 1 = 1";
+            }
+            else
+            {
+                typeClause = " where " + TYPE + " = '" + type + "' ";
+            }
+
+            //both dates were entered
+            if((fromDate != "" && fromDate != null) && (toDate != "" && toDate != null))
+            {
+                dateClause = " and " + TIMESTAMP + " <= '" + toDate + "' and " + TIMESTAMP + " >= '" + fromDate + "' ";
+            }
+            //fromDate was entered
+            else if((fromDate != "" && fromDate != null) && (toDate == "" || toDate == null))
+            {
+                dateClause = " and " + TIMESTAMP + " >= '" + fromDate + "' ";
+            }
+            //toDate was entered
+            else if((fromDate == "" || fromDate == null) && (toDate != "" && toDate != null))
+            {
+                dateClause = " and " + TIMESTAMP + " <= '" + toDate + "' ";
+            }
+            else
+            {
+                dateClause =  " and 1 = 1 ";
+            }
+
+            String sqlQuery = "select * from " + TABLE_ACTIVITIES;
+            sqlQuery += typeClause;
+            sqlQuery += dateClause;
+
+            Cursor cursor = db.rawQuery(sqlQuery, null);
+
+            while (cursor.moveToNext()) {
+                Act currentActivity = new Act(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        Double.parseDouble((cursor.getString(3))),
+                        cursor.getString(4));
+
+                stats.add(currentActivity);
+            }
+            db.close();
+            cursor.close();
+
+        }
+
+        return stats;
     }
 }
