@@ -1,17 +1,25 @@
 package com.example.mcmull27.diabetesmanager;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
+
 
 public class ActivitiesPage extends AppCompatActivity {
 
+    DatabaseManager db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activities_page);
+
+        db = new DatabaseManager(this);
+        ArrayList<Act> recent = db.selectAllActs();
+
 
         //navigation bar
         findViewById(R.id.regimen_button).setOnClickListener(new View.OnClickListener() {

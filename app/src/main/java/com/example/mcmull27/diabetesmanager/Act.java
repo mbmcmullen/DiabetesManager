@@ -24,6 +24,9 @@ public class Act{
     private static String PRETTY_DATE = "EEE, d MMM yyyy hh:mm: aaa";
     private SimpleDateFormat prettyDatePrinter;
 
+    public Act(String type){
+        this.type = type;
+    }
     public Act(int id, String type, String description, double amount, String timestamp){
         this.id = id;
         this.type = type;
@@ -69,6 +72,10 @@ public class Act{
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setType(String t){
+        type=t;
     }
 
     public Date getDateTime() {

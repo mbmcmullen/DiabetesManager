@@ -6,10 +6,8 @@
     <color name="backgroundColor">@android:color/darker_gray</color>
     <color name="textColor">#000000</color>
     <color name="colorAccentText">#ffffff</color>
-
-    <!--Act type colors-->
-    <color name="color_Ex">#68996f</color>
-    <color name="color_Med">#687d99</color>
-    <color name="color_Diet">#7c6899</color>
-    <color name="color_Bgl">#959968</color>
+    <color name="colorBGLItem">#910000</color>
+    <color name="colorDietItem">#098e00</color>
+    <color name="colorMedicationItem">#960057</color>
+    <color name="colorExerciseItem">#000796</color>
 </resources>

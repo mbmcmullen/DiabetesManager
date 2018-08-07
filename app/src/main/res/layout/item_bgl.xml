@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBGLItem">
+
+    <TextView
+        android:id="@+id/bgl_label"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/bgl_label"
+        android:textColor="@color/colorAccentText"/>
+
+    <EditText
+        android:id="@+id/item_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/amount_hint"
+        android:textColor="@color/colorAccentText"
+        android:textColorHint="@color/colorAccentText"
+        android:inputType="number"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorBGLItem">
+        <EditText
+            android:id="@+id/item_date"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/date_hint"
+            android:textColor="@color/colorAccentText"
+            android:textColorHint="@color/colorAccentText"
+            android:inputType="date"/>
+        <EditText
+            android:id="@+id/item_time"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/time_hint"
+            android:textColor="@color/colorAccentText"
+            android:textColorHint="@color/colorAccentText"
+            android:inputType="time"/>
+
+    </LinearLayout>
+</LinearLayout>

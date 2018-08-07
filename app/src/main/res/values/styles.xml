@@ -10,11 +10,23 @@
     </style>
     <!-- button style -->
     <style name="buttonStyle" parent="Widget.AppCompat.Button">
-        <item name = "android:minWidth">110dp</item>
-        <item name = "android:minHeight">45dp</item>
+    <item name = "android:minWidth">110dp</item>
+    <item name = "android:minHeight">45dp</item>
+    <item name = "android:textStyle">bold</item>
+    <item name = "android:background">@color/colorAccent</item>
+    <item name = "android:textColor">@color/colorAccentText</item>
+    <item name = "android:bottomLeftRadius">1dp</item>
+    <item name = "android:bottomRightRadius">5dp</item>
+    <item name = "android:topLeftRadius">5dp</item>
+    <item name = "android:topRightRadius">1dp</item>
+    </style>
+
+    <style name="SelectionButtonStyle" parent="Widget.AppCompat.Button">
         <item name = "android:textStyle">bold</item>
         <item name = "android:background">@color/colorAccent</item>
         <item name = "android:textColor">@color/colorAccentText</item>
+        <item name = "android:layout_marginLeft">4dp</item>
+        <item name = "android:layout_marginRight">4dp</item>
         <item name = "android:bottomLeftRadius">1dp</item>
         <item name = "android:bottomRightRadius">5dp</item>
         <item name = "android:topLeftRadius">5dp</item>
