@@ -60,6 +60,12 @@ public class PrescribedRegimen extends AppCompatActivity {
         lsView.setAdapter(regAdapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(PrescribedRegimen.this, MainActivity.class);
+        PrescribedRegimen.this.startActivity(intent);
+    }
+
 
     public class RegAdapter extends ArrayAdapter<Act> {
         private List<Act> objects;

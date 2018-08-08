@@ -119,7 +119,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+":"+time.getText().toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
                 }
             });
@@ -133,7 +133,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+":"+editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
                 }
             });
@@ -185,7 +185,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+":"+time.getText().toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
                 }
             });
@@ -199,7 +199,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+":"+editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
                 }
             });

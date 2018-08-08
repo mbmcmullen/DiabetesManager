@@ -27,7 +27,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String DESCRIPTION = "description";
     private static final String TIMESTAMP = "timestamp";
     private static final String AMOUNT = "amount";
-    private static final String ACTIVITY_COLUMNS = "(" + TextUtils.join(", ", Arrays.asList(ID, TYPE, DESCRIPTION, AMOUNT, TIMESTAMP)) + ")";
+    private static final String ACTIVITY_COLUMNS = "(" + TextUtils.join(", ", Arrays.asList(TYPE, DESCRIPTION, AMOUNT, TIMESTAMP)) + ")";
 
     public DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,9 +62,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void insertAct(Act a){
         SQLiteDatabase db = this.getWritableDatabase();
         String sqlInsert = "insert into " + TABLE_ACTIVITIES + " " + ACTIVITY_COLUMNS;
-        sqlInsert+= " values(null, " + escape(a.getType());
+        sqlInsert+= " values(" + escape(a.getType());
         sqlInsert+= ", " + escape(a.getDescription());
-        sqlInsert+= ", " + escape("" + a.getAmount());
+        sqlInsert+= ", " + "" + a.getAmount();
         sqlInsert+=", " + escape(a.getTimestamp());
         sqlInsert+=")";
         db.execSQL(sqlInsert);
@@ -74,7 +74,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void insertRegItem(Act a){
         SQLiteDatabase db = this.getWritableDatabase();
         String sqlInsert = "insert into " + TABLE_REGIMEN + " " + ACTIVITY_COLUMNS;
-        sqlInsert+= " values(null, " + escape(a.getType());
+        sqlInsert+= " values(" + escape(a.getType());
         sqlInsert+= ", " + escape(a.getDescription());
         sqlInsert+= ", " + escape("" + a.getAmount());
         sqlInsert+=", " + escape(a.getTimestamp());

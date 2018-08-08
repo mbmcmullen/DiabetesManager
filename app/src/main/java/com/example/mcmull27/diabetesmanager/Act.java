@@ -20,12 +20,15 @@ public class Act{
     private Date dateTime;
     private SimpleDateFormat dateParser;
     private static String TAG = "ActModel";
-    private static String DATE_FORMAT = "dd-MMM-yyyy HH:mm:ss";
+    private static String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
     private static String PRETTY_DATE = "EEE, d MMM yyyy hh:mm: aaa";
     private SimpleDateFormat prettyDatePrinter;
 
     public Act(String type){
         this.type = type;
+        if(type.equals(BGL)){
+            description = type;
+        }
     }
     public Act(int id, String type, String description, double amount, String timestamp){
         this.id = id;

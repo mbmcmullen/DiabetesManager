@@ -54,5 +54,9 @@ public class ActivitiesPage extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ActivitiesPage.this, MainActivity.class);
+        ActivitiesPage.this.startActivity(intent);
+    }
 }

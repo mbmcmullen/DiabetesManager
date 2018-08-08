@@ -50,6 +50,34 @@ public class AddActivityForm extends AppCompatActivity {
         rvActs.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        db.close();
+        for(int i= acts.size()-1; i>=0;i--){
+            acts.remove(i);
+            adapter.notifyItemRemoved(i);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        db = new DatabaseManager(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!acts.isEmpty()){
+            int i = acts.size()-1;
+            acts.remove(i);
+            adapter.notifyItemRemoved(i);
+        }else{
+            super.onBackPressed();
+        }
+
+    }
+
     private boolean valid(Act a){
         return true;
     }
