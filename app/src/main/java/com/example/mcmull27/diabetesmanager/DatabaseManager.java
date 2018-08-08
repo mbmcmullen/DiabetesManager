@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class DatabaseManager extends SQLiteOpenHelper {
@@ -195,7 +196,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return activities;
     }
 
-    public ArrayList<Act> queryActs(String type, String toDate, String fromDate){
+    public List<Act> queryActs(String type, String toDate, String fromDate){
         ArrayList<Act> stats = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String dateClause, typeClause;

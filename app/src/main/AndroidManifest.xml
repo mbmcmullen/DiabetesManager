@@ -64,7 +64,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Calculations" />
-        <activity android:name=".Graph"></activity>
+        <activity android:name=".Graph" />
+        <activity android:name=".Table"></activity>
     </application>
 
 </manifest>

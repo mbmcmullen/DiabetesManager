@@ -7,19 +7,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static com.example.mcmull27.diabetesmanager.StatisticsPage.AMOUNT_ONE;
-import static com.example.mcmull27.diabetesmanager.StatisticsPage.AMOUNT_THREE;
-import static com.example.mcmull27.diabetesmanager.StatisticsPage.AMOUNT_TWO;
+import java.util.List;
+
+import static com.example.mcmull27.diabetesmanager.StatisticsPage.FROM_DATE;
+import static com.example.mcmull27.diabetesmanager.StatisticsPage.TO_DATE;
+import static com.example.mcmull27.diabetesmanager.StatisticsPage.TYPE;
 
 public class Calculations extends AppCompatActivity {
+    private String ty;
+    private String fd;
+    private String td;
+    private DatabaseManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculations);
 
-        calculations();
+        Intent i = getIntent();
 
+        ty = i.getStringExtra(TYPE);
+        fd = i.getStringExtra(FROM_DATE);
+        td = i.getStringExtra(TO_DATE);
+
+        calculations(ty,fd,td);
 
         //button to go back to main stats screen
         Button back = (Button) findViewById(R.id.back);
@@ -39,13 +50,24 @@ public class Calculations extends AppCompatActivity {
                 openGraphPage();
             }
         });
+
+        //button to go to query screen
+        Button query = (Button) findViewById(R.id.query);
+        graph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open up the query activity
+                openQueryPage();
+            }
+        });
      }
 
      //calculates the mean and standard deviance
-     public void calculations()
+     public void calculations(String type, String fromDate, String toDate)
      {
-         //get passed in values from intent
-         Intent intent = getIntent();
+         db = new DatabaseManager(this);
+
+        List<Act> actList;
 
          String a1_txt;
          String a2_txt;
@@ -58,68 +80,31 @@ public class Calculations extends AppCompatActivity {
          double mean = 0;
          double stdDev = 0;
 
+         try {
+             actList = db.queryActs(type, fromDate, toDate);
 
-         if(intent.getStringExtra(AMOUNT_THREE) == null || intent.getStringExtra(AMOUNT_THREE).equalsIgnoreCase("") || intent.getStringExtra(AMOUNT_THREE).equalsIgnoreCase("amount"))
-         {
-             a3_txt = "";
-             count--;
-         }
-         else
-         {
-             a3_txt = intent.getStringExtra(AMOUNT_THREE).toString();
-             a3 = Integer.parseInt(a3_txt);
-             sum += a3;
-         }
-
-         if(intent.getStringExtra(AMOUNT_TWO) == null || intent.getStringExtra(AMOUNT_TWO).equalsIgnoreCase("") || intent.getStringExtra(AMOUNT_TWO).equalsIgnoreCase("amount"))
-         {
-             a2_txt = "";
-             count--;
-         }
-         else
-         {
-             a2_txt = intent.getStringExtra(AMOUNT_TWO).toString();
-             a2 = Integer.parseInt(a2_txt);
-             sum += a2;
-         }
-
-         if(intent.getStringExtra(AMOUNT_ONE) == null || intent.getStringExtra(AMOUNT_ONE).equalsIgnoreCase("") || intent.getStringExtra(AMOUNT_ONE).equalsIgnoreCase("amount"))
-         {
-             a1_txt = "";
-             count--;
-         }
-         else
-         {
-             a1_txt = intent.getStringExtra(AMOUNT_ONE).toString();
-             a1 = Integer.parseInt(a1_txt);
-             sum += a1;
-         }
-
-         //calculate the mean and standard.dev
-         if(count > 0)
-         {
-             mean = sum/count;
-             if(a1 > 0)
-             {
-                 stdDev += Math.pow(a1 - mean, 2);
-             }
-             if(a2 >0)
-             {
-                 stdDev += Math.pow(a2 - mean, 2);
-             }
-             if(a3 >0)
-             {
-                 stdDev += Math.pow(a3 - mean, 2);
+             //calculate mean
+             for (int i = 0; i < actList.size(); i++) {
+                 count++;
+                 sum += actList.get(i).getAmount();
              }
 
+             mean = sum / count;
+
+             //calculate standard deviance
+             for (int i = 0; i < actList.size(); i++) {
+                 stdDev += Math.pow(actList.get(i).getAmount() - mean, 2);
+             }
+
+             //set text fields
              TextView stdDev_res = (TextView) findViewById(R.id.stdDev_res);
              stdDev_res.setText(Double.toString(stdDev));
 
              TextView mean_res = (TextView) findViewById(R.id.mean_res);
              mean_res.setText(Double.toString(mean));
-
          }
-         else
+         //if error occurs, populate fields with ----
+         catch (Exception E)
          {
              TextView stdDev_res = (TextView) findViewById(R.id.stdDev_res);
              stdDev_res.setText("----");
@@ -128,11 +113,29 @@ public class Calculations extends AppCompatActivity {
              mean_res.setText("----");
          }
 
+
+
+
      }
 
      public void openGraphPage()
      {
          Intent toGraph = new Intent(this, Graph.class);
+
+         toGraph.putExtra("TYPE",this.ty);
+         toGraph.putExtra("FROM_DATE",this.fd);
+         toGraph.putExtra("TO_DATE",this.td);
+
          startActivity(toGraph);
+     }
+
+     public void openQueryPage()
+     {
+         Intent toTable = new Intent(Calculations.this, Table.class);
+         toTable.putExtra("TYPE",this.ty);
+         toTable.putExtra("FROM_DATE",this.fd);
+         toTable.putExtra("TO_DATE",this.td);
+
+         startActivity(toTable);
      }
 }

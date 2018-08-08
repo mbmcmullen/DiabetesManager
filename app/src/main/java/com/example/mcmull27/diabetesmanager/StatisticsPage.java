@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class StatisticsPage extends AppCompatActivity {
 
     private DatabaseManager db;
-    public static final String AMOUNT_ONE = "com.example.mcmull27.diabetesmanager.AMOUNT_ONE";
-    public static final String AMOUNT_TWO = "com.example.mcmull27.diabetesmanager.AMOUNT_TWO";;
-    public static final String AMOUNT_THREE = "com.example.mcmull27.diabetesmanager.AMOUNT_THREE";
+    public static final String FROM_DATE = "com.example.mcmull27.diabetesmanager.FROM_DATE";
+    public static final String TO_DATE = "com.example.mcmull27.diabetesmanager.TO_DATE";;
+    public static final String TYPE = "com.example.mcmull27.diabetesmanager.TYPE";
 
 
 
@@ -65,74 +65,7 @@ public class StatisticsPage extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                ArrayList<Act> ret = new ArrayList<Act>();
-                int retSize;
-
-                //get each field's text
-                Spinner type = (Spinner) findViewById(R.id.activity_type_spinner);
-                String type_txt = type.getSelectedItem().toString();
-
-                EditText frm = (EditText) findViewById(R.id.fromText);
-                String frm_txt = frm.getText().toString();
-
-                EditText to = (EditText) findViewById(R.id.toText);
-                String to_txt = frm.getText().toString();
-
-                //run query
-                db = new DatabaseManager(StatisticsPage.this);
-                ret = db.queryActs(type_txt, to_txt, frm_txt);
-
-
-
-                if(ret != null && ret.size() >0)
-                {
-                    retSize = ret.size();
-
-                    for(int i = 0; i<3; i++)
-                    {
-                        String amount;
-
-                        //Activity Row 1
-                        if(i == 0 && retSize > i)
-                        {
-                            TextView a1 = (TextView) findViewById(R.id.activity1);
-                            a1.setText(ret.get(i).getDescription());
-                            TextView t1 = (TextView) findViewById(R.id.time1);
-                            t1.setText(ret.get(i).getTimestamp());
-                            TextView am1 = (TextView) findViewById(R.id.amount1);
-                            amount = Double.toString(ret.get(i).getAmount());
-                            am1.setText(amount);
-
-                        }
-                        //Activity Row 2
-                        else if( i == 1 && retSize > i)
-                        {
-                            TextView a2 = (TextView) findViewById(R.id.activity2);
-                            a2.setText(ret.get(i).getDescription());
-                            TextView t2 = (TextView) findViewById(R.id.time2);
-                            t2.setText(ret.get(i).getTimestamp());
-                            TextView am2 = (TextView) findViewById(R.id.amount2);
-                            amount = Double.toString(ret.get(i).getAmount());
-                            am2.setText(amount);
-                        }
-                        //Activity Row 3
-                        else
-                        {
-                            if(i == 2 && retSize > i)
-                            {
-                                TextView a3 = (TextView) findViewById(R.id.activity3);
-                                a3.setText(ret.get(i).getDescription());
-                                TextView t3 = (TextView) findViewById(R.id.time3);
-                                t3.setText(ret.get(i).getTimestamp());
-                                TextView am3 = (TextView) findViewById(R.id.amount3);
-                                amount = Double.toString(ret.get(i).getAmount());
-                                am3.setText(amount);
-                            }
-                        }
-
-                    }
-
-                }
+                openTablePage();
 
             }
 
@@ -156,45 +89,65 @@ public class StatisticsPage extends AppCompatActivity {
                 openGraphPage();
             }
         });
+
     }
 
     public void openStatsPage()
     {
-        Intent toCalc = new Intent(this, Calculations.class);
 
-        TextView a1 = (TextView) findViewById(R.id.amount1);
-        String a1_txt = a1.getText().toString();
-        toCalc.putExtra(AMOUNT_ONE, a1_txt);
+        Intent toCalc= new Intent(this, Calculations.class);
 
-        TextView a2 = (TextView) findViewById(R.id.amount2);
-        String a2_txt = a2.getText().toString();
-        toCalc.putExtra(AMOUNT_TWO, a2_txt);
+        TextView fd = (TextView) findViewById(R.id.fromText);
+        String fd_txt = fd.getText().toString();
+        toCalc.putExtra(FROM_DATE, fd_txt);
 
-        TextView a3 = (TextView) findViewById(R.id.amount3);
-        String a3_txt = a3.getText().toString();
-        toCalc.putExtra(AMOUNT_THREE, a3_txt);
+        Spinner ty = (Spinner) findViewById(R.id.activity_type_spinner);
+        String ty_txt = ty.getSelectedItem().toString();
+        toCalc.putExtra(TYPE, ty_txt);
 
+        TextView td = (TextView) findViewById(R.id.toText);
+        String td_txt = td.getText().toString();
+        toCalc.putExtra(TO_DATE, td_txt);
 
         startActivity(toCalc);
     }
 
     public void openGraphPage()
     {
-        Intent toCalc = new Intent(this, Graph.class);
+        Intent toGraph= new Intent(this, Graph.class);
 
-        TextView a1 = (TextView) findViewById(R.id.amount1);
-        String a1_txt = a1.getText().toString();
-        toCalc.putExtra(AMOUNT_ONE, a1_txt);
+        TextView fd = (TextView) findViewById(R.id.fromText);
+        String fd_txt = fd.getText().toString();
+        toGraph.putExtra(FROM_DATE, fd_txt);
 
-        TextView a2 = (TextView) findViewById(R.id.amount2);
-        String a2_txt = a2.getText().toString();
-        toCalc.putExtra(AMOUNT_TWO, a2_txt);
+        Spinner ty = (Spinner) findViewById(R.id.activity_type_spinner);
+        String ty_txt = ty.getSelectedItem().toString();
+        toGraph.putExtra(TYPE, ty_txt);
 
-        TextView a3 = (TextView) findViewById(R.id.amount3);
-        String a3_txt = a3.getText().toString();
-        toCalc.putExtra(AMOUNT_THREE, a3_txt);
+        TextView td = (TextView) findViewById(R.id.toText);
+        String td_txt = td.getText().toString();
+        toGraph.putExtra(TO_DATE, td_txt);
 
-        startActivity(toCalc);
+        startActivity(toGraph);
+    }
+
+    public void openTablePage()
+    {
+        Intent toTabl= new Intent(this, Table.class);
+
+        TextView fd = (TextView) findViewById(R.id.fromText);
+        String fd_txt = fd.getText().toString();
+        toTabl.putExtra(FROM_DATE, fd_txt);
+
+        Spinner ty = (Spinner) findViewById(R.id.activity_type_spinner);
+        String ty_txt = ty.getSelectedItem().toString();
+        toTabl.putExtra(TYPE, ty_txt);
+
+        TextView td = (TextView) findViewById(R.id.toText);
+        String td_txt = td.getText().toString();
+        toTabl.putExtra(TO_DATE, td_txt);
+
+        startActivity(toTabl);
     }
 
 }
