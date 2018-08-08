@@ -2,12 +2,15 @@ package com.example.mcmull27.diabetesmanager;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -24,6 +27,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String DESCRIPTION = "description";
     private static final String TIMESTAMP = "timestamp";
     private static final String AMOUNT = "amount";
+    private static final String ACTIVITY_COLUMNS = "(" + TextUtils.join(", ", Arrays.asList(ID, TYPE, DESCRIPTION, AMOUNT, TIMESTAMP)) + ")";
 
     public DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,14 +35,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlcreate = "create table" + TABLE_ACTIVITIES + "(" + ID;
-        sqlcreate += "integer primary key autoincrement,"+ TYPE + " text, ";
+        String sqlcreate = "create table " + TABLE_ACTIVITIES + " (" + ID;
+        sqlcreate += " integer primary key autoincrement, "+ TYPE + " text, ";
         sqlcreate +=  DESCRIPTION+ " text, " + AMOUNT + " text, ";
         sqlcreate +=  TIMESTAMP+ " text)";
         db.execSQL(sqlcreate);
 
-        String sqlcreateReg = "create table" + TABLE_REGIMEN +"(" + ID;
-        sqlcreateReg += "integer primary key autoincrement,"+ TYPE + " text, ";
+        String sqlcreateReg = "create table " + TABLE_REGIMEN +" (" + ID;
+        sqlcreateReg += " integer primary key autoincrement, "+ TYPE + " text, ";
         sqlcreateReg +=  DESCRIPTION+ " text, " + AMOUNT + " text, ";
         sqlcreateReg +=  TIMESTAMP+ " text)";
         db.execSQL(sqlcreateReg);
@@ -51,24 +55,29 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    private static String escape(String s) {
+        return DatabaseUtils.sqlEscapeString(s);
+    }
+
     public void insertAct(Act a){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlInsert = "insert into " + TABLE_ACTIVITIES;
-        sqlInsert+= "values(null, "+a.getType();
-        sqlInsert+= ", "+a.getDescription();
-        sqlInsert+= ", "+a.getAmount();
-        sqlInsert+=", "+a.getTimestamp();
+        String sqlInsert = "insert into " + TABLE_ACTIVITIES + " " + ACTIVITY_COLUMNS;
+        sqlInsert+= " values(null, " + escape(a.getType());
+        sqlInsert+= ", " + escape(a.getDescription());
+        sqlInsert+= ", " + escape("" + a.getAmount());
+        sqlInsert+=", " + escape(a.getTimestamp());
+        sqlInsert+=")";
         db.execSQL(sqlInsert);
         db.close();
     }
 
     public void insertRegItem(Act a){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlInsert = "insert into " + TABLE_REGIMEN;
-        sqlInsert+= "values(null, "+a.getType();
-        sqlInsert+= ", "+a.getDescription();
-        sqlInsert+= ", "+a.getAmount();
-        sqlInsert+=", "+a.getTimestamp();
+        String sqlInsert = "insert into " + TABLE_REGIMEN + " " + ACTIVITY_COLUMNS;
+        sqlInsert+= " values(null, " + escape(a.getType());
+        sqlInsert+= ", " + escape(a.getDescription());
+        sqlInsert+= ", " + escape("" + a.getAmount());
+        sqlInsert+=", " + escape(a.getTimestamp());
         db.execSQL(sqlInsert);
         db.close();
     }
@@ -79,7 +88,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqlUpdate +=" set "+DESCRIPTION +"="+ desc+", ";
         sqlUpdate += AMOUNT+"="+amt+", ";
         sqlUpdate += TIMESTAMP+"="+time;
-        sqlUpdate += "where "+ID+"="+id;
+        sqlUpdate += " where "+ID+"="+id;
         db.execSQL(sqlUpdate);
         db.close();
     }
@@ -90,7 +99,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqlUpdate +=" set "+DESCRIPTION +"="+ desc+", ";
         sqlUpdate += AMOUNT+"="+amt+", ";
         sqlUpdate += TIMESTAMP+"="+time;
-        sqlUpdate += "where "+ID+"="+id;
+        sqlUpdate += " where "+ID+"="+id;
         db.execSQL(sqlUpdate);
         db.close();
     }

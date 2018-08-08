@@ -82,18 +82,17 @@ public class PrescribedRegimen extends AppCompatActivity {
 
             if (a != null) {
                 switch(a.getType()) {
-                    // todo : pick better colors
                     case(Act.BGL):
-                        v.setBackgroundColor(getResources().getColor(R.color.color_Bgl));
+                        v.setBackgroundColor(getResources().getColor(R.color.colorBGLItem));
                         break;
                     case(Act.EXERCISE):
-                        v.setBackgroundColor(getResources().getColor(R.color.color_Ex));
+                        v.setBackgroundColor(getResources().getColor(R.color.colorExerciseItem));
                         break;
                     case(Act.DIET):
-                        v.setBackgroundColor(getResources().getColor(R.color.color_Diet));
+                        v.setBackgroundColor(getResources().getColor(R.color.colorDietItem));
                         break;
                     case(Act.MEDICATION):
-                        v.setBackgroundColor(getResources().getColor(R.color.color_Med));
+                        v.setBackgroundColor(getResources().getColor(R.color.colorMedicationItem));
                         break;
                 }
                 ImageButton complete = (ImageButton) v.findViewById(R.id.btnComplete);
