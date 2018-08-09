@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //navigation bar
         findViewById(R.id.regimen_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,5 +44,12 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(intent);
     }
 
+
+
+    //make login apart of the menu bar as well as sign out?
+    public void Login(View v){
+        Intent login = new Intent(this, SignIn.class);
+        this.startActivity(login);
+    }
 
 }
