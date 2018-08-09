@@ -38,17 +38,17 @@
     <string name="list_button">List</string>
     <string name="display_stats_button">Stats</string>
     <string name="search_button">Search</string>
-    <string name= "by_date_label">By Date:</string>
-    <string name= "from_hint">From</string>
-    <string name= "to_hint">To</string>
-    <string name= "keyword_label">Or by Keyword:</string>
-    <string name= "keyword_hint">Keyword</string>
-    <string name= "activity_label">Activity</string>
-    <string name= "date_time_label">DateTime</string>
-    <string name= "amount_label">Amount</string>
-    <string name= "activity_text">Activity</string>
-    <string name= "date_time_text">DateTime</string>
-    <string name= "amount_text">Amount</string>
+    <string name="by_date_label">By Date:</string>
+    <string name="from_hint">From</string>
+    <string name="to_hint">To</string>
+    <string name="keyword_label">Or by Keyword:</string>
+    <string name="keyword_hint">Keyword</string>
+    <string name="activity_label">Activity</string>
+    <string name="date_time_label">DateTime</string>
+    <string name="amount_label">Amount</string>
+    <string name="activity_text">Activity</string>
+    <string name="date_time_text">DateTime</string>
+    <string name="amount_text">Amount</string>
 
     <!-- Register and SignIn Labels -->
     <string name= "userName_hint">Username</string>
