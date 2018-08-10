@@ -8,9 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class AddActivityForm extends AppCompatActivity {
@@ -79,12 +84,26 @@ public class AddActivityForm extends AppCompatActivity {
     }
 
     private boolean valid(Act a){
+        if(a.getType().equals(Act.BGL)&&
+                (a.getAmount()<70||a.getAmount()>350))return false;
+        else if(a.getAmount()==0) return false;
+
+        if(a.getDescription()=="") return false;
+
+        String timestamp = a.getTimestamp();
+        SimpleDateFormat format = new SimpleDateFormat(Act.DATE_FORMAT);
+        try{
+            a.setDateTime(format.parse(timestamp));
+        }catch(Exception e){
+                return false;
+        }
         return true;
     }
 
     private class addListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
+            Boolean added = true;
             for(int i= acts.size()-1; i>=0;i--){
                 Act cur = acts.get(i);
                 if(valid(cur)){
@@ -92,8 +111,14 @@ public class AddActivityForm extends AppCompatActivity {
                     db.insertAct(cur);
                     acts.remove(i);
                     adapter.notifyItemRemoved(i);
+                }else{
+                    added = false;
                 }
             }
+            if(added)
+                Toast.makeText(AddActivityForm.this, "Activities Added", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(AddActivityForm.this, "Incomplete or invalid activities.", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -32,15 +32,6 @@ public class Calculations extends AppCompatActivity {
 
         calculations(ty,fd,td);
 
-        //button to go back to main stats screen
-        Button back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
         //button to go to graph screen
         Button graph = (Button) findViewById(R.id.graph);
         graph.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +44,7 @@ public class Calculations extends AppCompatActivity {
 
         //button to go to query screen
         Button query = (Button) findViewById(R.id.query);
-        graph.setOnClickListener(new View.OnClickListener() {
+        query.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //open up the query activity
@@ -126,7 +117,7 @@ public class Calculations extends AppCompatActivity {
          toGraph.putExtra("FROM_DATE",this.fd);
          toGraph.putExtra("TO_DATE",this.td);
 
-         startActivity(toGraph);
+         this.startActivity(toGraph);
      }
 
      public void openQueryPage()
@@ -136,6 +127,12 @@ public class Calculations extends AppCompatActivity {
          toTable.putExtra("FROM_DATE",this.fd);
          toTable.putExtra("TO_DATE",this.td);
 
-         startActivity(toTable);
+         this.startActivity(toTable);
      }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Calculations.this, StatisticsPage.class);
+        this.startActivity(intent);
+    }
 }
