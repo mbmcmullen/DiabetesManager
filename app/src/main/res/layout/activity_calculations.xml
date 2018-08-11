@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".Calculations">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_height="66dp"
         android:layout_marginEnd="56dp"
         android:layout_marginTop="8dp"
-        android:text="Standard Deviance:" />
+        android:text="@string/standard_dev" />
 
     <TextView
         android:id="@+id/stdDev_res"
@@ -20,8 +21,7 @@
         android:layout_height="64dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/stdDev"
-        android:layout_marginEnd="53dp"
-        android:text="" />
+        android:layout_marginEnd="53dp" />
 
     <TextView
         android:id="@+id/mean"
@@ -30,7 +30,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="129dp"
-        android:text="Mean: " />
+        android:text="@string/mean" />
 
     <TextView
         android:id="@+id/mean_res"
@@ -48,7 +48,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="95dp"
-        android:text="Query"/>
+        android:text="@string/list_button"/>
 
     <Button
         android:id="@+id/graph"
@@ -57,16 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/query"
-        android:text="Graph" />
+        android:text="@string/graph_button" />
 
-    <Button
-        android:id="@+id/back"
-        style="@style/buttonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/query"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-95dp"
-        android:text="Back" />
 
 </RelativeLayout>

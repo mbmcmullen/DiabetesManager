@@ -119,7 +119,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+":"+time.getText().toString());
+                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
                 }
             });
@@ -133,7 +133,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+":"+editable.toString());
+                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
                 }
             });
@@ -147,8 +147,13 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setAmount(Double.parseDouble(editable.toString()));
-                    Log.d("DATA UPDATE:"+getAdapterPosition()+" amount", editable.toString());
+                    String val = editable.toString();
+                    if(!val.equals("")) {
+                        items.get(getAdapterPosition()).setAmount(Double.parseDouble(editable.toString()));
+                        Log.d("DATA UPDATE:" + getAdapterPosition() + " amount", editable.toString());
+                    }else{
+                        items.get(getAdapterPosition()).setAmount(0);
+                    }
                 }
             });
         }
@@ -162,6 +167,12 @@ public class ActivityAdapter extends
         public EditText getAmount() { return amount; }
 
         public void setLabel(TextView label){this.label = label;}
+
+        public void setDate(String date){this.date.setText(date);}
+
+        public void setTime(String time){this.time.setText(time);}
+
+        public void setAmount(String amount){this.amount.setText(amount);}
     }
 
     public class ViewHolderAct extends RecyclerView.ViewHolder {
@@ -185,7 +196,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+":"+time.getText().toString());
+                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
                 }
             });
@@ -199,7 +210,7 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+":"+editable.toString());
+                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
                 }
             });
@@ -257,5 +268,12 @@ public class ActivityAdapter extends
             this.label = label;
         }
 
+        public void setDate(String date){this.date.setText(date);}
+
+        public void setTime(String time){this.time.setText(time);}
+
+        public void setAmount(String amount){this.amount.setText(amount);}
+
+        public void setDescription(String description){this.description.setText(description);}
     }
 }

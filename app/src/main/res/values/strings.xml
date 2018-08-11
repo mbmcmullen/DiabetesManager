@@ -2,6 +2,8 @@
     <string name="app_name">DiabetesManager</string>
     <string name="reminders">Reminders:</string>
     <string name="recent_activity">Recent Activities:</string>
+    <string name="hint_type">Type</string>
+    <string name="delete">Delete</string>
 
     <!--Navigation Button Labels-->
     <string name="home_button">Home</string>
@@ -49,6 +51,8 @@
     <string name="activity_text">Activity</string>
     <string name="date_time_text">DateTime</string>
     <string name="amount_text">Amount</string>
+    <string name = "standard_dev">Standard Deviance:</string>
+    <string name = "mean">Mean:</string>
 
     <!-- Register and SignIn Labels -->
     <string name= "userName_hint">Username</string>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".Graph">
 
     <Button
@@ -14,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="97dp"
-        android:text="Stats"
+        android:text="@string/statistics_button"
         tools:layout_editor_absoluteX="275dp"
         tools:layout_editor_absoluteY="362dp" />
 
@@ -25,19 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/stats"
-        android:text="Query"
+        android:text="@string/list_button"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="362dp" />
-
-    <Button
-        android:id="@+id/back"
-        style="@style/buttonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/query"
-        android:layout_centerHorizontal="true"
-        android:text="Back"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="422dp" />
 
 </RelativeLayout>

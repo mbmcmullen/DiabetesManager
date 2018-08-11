@@ -11,6 +11,7 @@ public class Act{
     public static final String EXERCISE = "EXERCISE";
     public static final String MEDICATION = "MEDICATION";
     public static final String BGL = "BGL";
+    public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm";
 
     private int id;
     private String type;
@@ -20,14 +21,13 @@ public class Act{
     private Date dateTime;
     private SimpleDateFormat dateParser;
     private static String TAG = "ActModel";
-    private static String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
     private static String PRETTY_DATE = "EEE, d MMM yyyy hh:mm: aaa";
     private SimpleDateFormat prettyDatePrinter;
 
     public Act(String type){
         this.type = type;
         if(type.equals(BGL)){
-            description = type;
+            description = "BGL Reading";
         }
     }
     public Act(int id, String type, String description, double amount, String timestamp){
