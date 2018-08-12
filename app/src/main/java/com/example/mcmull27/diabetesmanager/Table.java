@@ -20,6 +20,7 @@ import java.util.List;
 import static com.example.mcmull27.diabetesmanager.StatisticsPage.FROM_DATE;
 import static com.example.mcmull27.diabetesmanager.StatisticsPage.TO_DATE;
 import static com.example.mcmull27.diabetesmanager.StatisticsPage.TYPE;
+import static com.example.mcmull27.diabetesmanager.StatisticsPage.CONTAINS;
 
 public class Table extends AppCompatActivity {
     public List<Act> actList;
@@ -28,6 +29,12 @@ public class Table extends AppCompatActivity {
     private String fd;
     private String td;
     private String ty;
+    private String ct;
+
+    public static final String tFROM_DATE = "com.example.mcmull27.diabetesmanager.tFROM_DATE";
+    public static final String tTO_DATE = "com.example.mcmull27.diabetesmanager.tTO_DATE";;
+    public static final String tTYPE = "com.example.mcmull27.diabetesmanager.tTYPE";
+    public static final String tCONTAINS = "com.example.mcmull27.diabetesmanager.tCONTAINS";
 
     List<Act> displayList;
     QueryAdaptor adapter;
@@ -42,8 +49,10 @@ public class Table extends AppCompatActivity {
         //get previous intent's data
         Intent intent = getIntent();
         ty = intent.getStringExtra(TYPE);
+
         fd = intent.getStringExtra(FROM_DATE);
         td = intent.getStringExtra(TO_DATE);
+        ct = intent.getStringExtra(CONTAINS);
 
         //query the db
         db = new DatabaseManager(this);
@@ -64,16 +73,20 @@ public class Table extends AppCompatActivity {
         try{
             fromDate = format.parse(fd);
             toDate = format.parse(td);
-        }catch(Exception e){}
-        //filter from date
-        if(!fd.equals("")){
-            //loop through displayList and remove any activity with a  date that is before fromDate
+        }catch(Exception e){
+            fromDate = null;
+            toDate = null;
         }
-        //filter to date date
-        if(!td.equals("")){
-            //loop through displayList and remove any activity with a date that is after toDate
+
+
+        for(int i=0; i<displayList.size(); i++)
+        {
+            if((fromDate != null && displayList.get(i).getDateTime().before(fromDate)) || (toDate != null && displayList.get(i).getDateTime().after(toDate)) || ((ct != null && !ct.isEmpty()) && !displayList.get(i).getDescription().contains(ct)))
+            {
+                displayList.remove(i);
+            }
         }
-        //filter contains
+
 
         //creating recyclerview adapter and delete listener
         adapter = new QueryAdaptor(displayList);
@@ -111,19 +124,23 @@ public class Table extends AppCompatActivity {
     {
         Intent toGraph = new Intent(this, Graph.class);
 
-        toGraph.putExtra("TYPE",this.ty);
-        toGraph.putExtra("FROM_DATE",this.fd);
-        toGraph.putExtra("TO_DATE",this.td);
+        toGraph.putExtra("tTYPE",this.ty);
+        toGraph.putExtra("tFROM_DATE",this.fd);
+        toGraph.putExtra("tTO_DATE",this.td);
 
         startActivity(toGraph);
     }
 
     public void openCalculationsPage(){
-        Intent toStats = new Intent(Table.this, Calculations.class);
+        Intent toStats = new Intent(getApplicationContext(), Calculations.class);
 
-        toStats.putExtra("TYPE",ty);
-        toStats.putExtra("FROM_DATE",fd);
-        toStats.putExtra("TO_DATE",td);
+
+        Log.e("JKERR", "putting TYPE as " + ty);
+        Log.e("JKERR", "putting FROM_DATE as " + fd);
+        Log.e("JKERR", "putting TO_DATE as " + td);
+        toStats.putExtra("tTYPE",ty);
+        toStats.putExtra("tFROM_DATE",fd);
+        toStats.putExtra("tTO_DATE",td);
 
         startActivity(toStats);
     }
