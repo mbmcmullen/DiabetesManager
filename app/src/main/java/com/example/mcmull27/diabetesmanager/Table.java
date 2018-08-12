@@ -12,7 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.mcmull27.diabetesmanager.StatisticsPage.FROM_DATE;
@@ -29,6 +31,8 @@ public class Table extends AppCompatActivity {
 
     List<Act> displayList;
     QueryAdaptor adapter;
+
+    Date toDate, fromDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +52,30 @@ public class Table extends AppCompatActivity {
 
         displayList = new ArrayList<>();
 
+        //filter types
         for(int i=0; i<actList.size();i++){
             Act e = actList.get(i);
             if(e.getType().equals(ty)){
                 displayList.add(e);
             }
         }
+        SimpleDateFormat format = new SimpleDateFormat(Act.DATE_FORMAT);
 
-        //creating recyclerview adapter
+        try{
+            fromDate = format.parse(fd);
+            toDate = format.parse(td);
+        }catch(Exception e){}
+        //filter from date
+        if(!fd.equals("")){
+            //loop through displayList and remove any activity with a  date that is before fromDate
+        }
+        //filter to date date
+        if(!td.equals("")){
+            //loop through displayList and remove any activity with a date that is after toDate
+        }
+        //filter contains
+
+        //creating recyclerview adapter and delete listener
         adapter = new QueryAdaptor(displayList);
         adapter.setListener(new QueryAdaptor.OnItemClickListener() {
             @Override
