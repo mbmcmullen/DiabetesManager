@@ -59,5 +59,15 @@
         android:layout_alignTop="@+id/query"
         android:text="@string/graph_button" />
 
+    <Button
+        android:id="@+id/back"
+        style="@style/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/query"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-95dp"
+        android:text="Back" />
+
 
 </RelativeLayout>

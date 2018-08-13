@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class StatisticsPage extends AppCompatActivity {
@@ -19,9 +22,11 @@ public class StatisticsPage extends AppCompatActivity {
     public static final String FROM_DATE = "com.example.mcmull27.diabetesmanager.FROM_DATE";
     public static final String TO_DATE = "com.example.mcmull27.diabetesmanager.TO_DATE";;
     public static final String TYPE = "com.example.mcmull27.diabetesmanager.TYPE";
+    public static final String CONTAINS = "com.example.mcmull27.diabetesmanager.CONTAINS";
 
-
-
+    TextView fd, td, ct;
+    String td_txt, fd_txt,c_txt;
+    SimpleDateFormat format;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +66,45 @@ public class StatisticsPage extends AppCompatActivity {
         });
 
         //handler for search button
+        td = (TextView) findViewById(R.id.toText);
+        td_txt = td.getText().toString();
+
+        fd = (TextView) findViewById(R.id.fromText);
+        fd_txt = fd.getText().toString();
+
+        ct = (TextView) findViewById(R.id.keywordText);
+        c_txt = ct.getText().toString();
+
+        format = new SimpleDateFormat(Act.DATE_FORMAT);
+
         Button search = (Button) findViewById(R.id.search_button);
         search.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                openTablePage();
-
+                if( fd_txt.equals("") && td_txt.equals("") ){openTablePage();
+                }else if( (!fd_txt.equals("")) && (!td_txt.equals("")) ){
+                    try{
+                        fd_txt = format.parse(fd_txt).toString();
+                        td_txt = format.parse(td_txt).toString();
+                        openTablePage();
+                    }catch(Exception e){
+                        Toast.makeText(StatisticsPage.this, "Invalid Date", Toast.LENGTH_SHORT).show();
+                    }
+                }else if( (fd_txt.equals("")) ){
+                    try{
+                        td_txt = format.parse(td_txt).toString();
+                        openTablePage();
+                    }catch(Exception e){
+                        Toast.makeText(StatisticsPage.this, "Invalid To Date", Toast.LENGTH_SHORT).show();
+                    }
+                }else if( td_txt.equals("") ){
+                    try{
+                        fd_txt = format.parse(fd_txt).toString();
+                        openTablePage();
+                    }catch(Exception e){
+                        Toast.makeText(StatisticsPage.this, "Invalid From Date", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
 
 
@@ -78,17 +116,14 @@ public class StatisticsPage extends AppCompatActivity {
     {
         Intent toTable= new Intent(this, Table.class);
 
-        TextView fd = (TextView) findViewById(R.id.fromText);
-        String fd_txt = fd.getText().toString();
         toTable.putExtra(FROM_DATE, fd_txt);
 
         Spinner ty = (Spinner) findViewById(R.id.activity_type_spinner);
         String ty_txt = ty.getSelectedItem().toString().toUpperCase();
         toTable.putExtra(TYPE, ty_txt);
 
-        TextView td = (TextView) findViewById(R.id.toText);
-        String td_txt = td.getText().toString();
         toTable.putExtra(TO_DATE, td_txt);
+        toTable.putExtra(CONTAINS, c_txt);
 
         startActivity(toTable);
     }
