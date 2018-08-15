@@ -61,6 +61,8 @@
     <string name= "register_button">Register</string>
     <string name= "Login_button">Login</string>
     <string name= "register_here_button">Register Here</string>
+    <string name= "LogOut">Logout</string>
+    <string name= "rememberMe_checkbox">Remember Me</string>
 
     <!--Activity Spinner-->
     <string-array name="activity_type_array">
