@@ -51,8 +51,11 @@
     <string name="activity_text">Activity</string>
     <string name="date_time_text">DateTime</string>
     <string name="amount_text">Amount</string>
-    <string name = "standard_dev">Standard Deviance:</string>
-    <string name = "mean">Mean:</string>
+
+    <!--Calculations fragment-->
+    <string name = "standard_dev">Standard Deviation: </string>
+    <string name = "mean">Mean: </string>
+    <string name = "total">Total: </string>
 
     <!-- Register and SignIn Labels -->
     <string name= "userName_hint">Username</string>

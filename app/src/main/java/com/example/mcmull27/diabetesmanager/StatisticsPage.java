@@ -67,39 +67,39 @@ public class StatisticsPage extends AppCompatActivity {
 
         //handler for search button
         td = (TextView) findViewById(R.id.toText);
-        td_txt = td.getText().toString();
-
         fd = (TextView) findViewById(R.id.fromText);
-        fd_txt = fd.getText().toString();
-
         ct = (TextView) findViewById(R.id.keywordText);
-        c_txt = ct.getText().toString();
 
-        format = new SimpleDateFormat(Act.DATE_FORMAT);
+
+        format = new SimpleDateFormat("mm/dd/yyyy");
 
         Button search = (Button) findViewById(R.id.search_button);
         search.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                c_txt = ct.getText().toString();
+                fd_txt = fd.getText().toString();
+                td_txt = td.getText().toString();
+
                 if( fd_txt.equals("") && td_txt.equals("") ){openTablePage();
                 }else if( (!fd_txt.equals("")) && (!td_txt.equals("")) ){
                     try{
-                        fd_txt = format.parse(fd_txt).toString();
-                        td_txt = format.parse(td_txt).toString();
+                        format.parse(fd_txt).toString();
+                        format.parse(td_txt).toString();
                         openTablePage();
                     }catch(Exception e){
                         Toast.makeText(StatisticsPage.this, "Invalid Date", Toast.LENGTH_SHORT).show();
                     }
                 }else if( (fd_txt.equals("")) ){
                     try{
-                        td_txt = format.parse(td_txt).toString();
+                        format.parse(td_txt).toString();
                         openTablePage();
                     }catch(Exception e){
                         Toast.makeText(StatisticsPage.this, "Invalid To Date", Toast.LENGTH_SHORT).show();
                     }
                 }else if( td_txt.equals("") ){
                     try{
-                        fd_txt = format.parse(fd_txt).toString();
+                        format.parse(fd_txt).toString();
                         openTablePage();
                     }catch(Exception e){
                         Toast.makeText(StatisticsPage.this, "Invalid From Date", Toast.LENGTH_SHORT).show();

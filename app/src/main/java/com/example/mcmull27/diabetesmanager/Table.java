@@ -68,20 +68,27 @@ public class Table extends AppCompatActivity {
                 displayList.add(e);
             }
         }
-        SimpleDateFormat format = new SimpleDateFormat(Act.DATE_FORMAT);
+        SimpleDateFormat format = new SimpleDateFormat("mm/dd/yyyy");
 
         try{
             fromDate = format.parse(fd);
-            toDate = format.parse(td);
+
         }catch(Exception e){
             fromDate = null;
+
+        }
+        try{
+            toDate = format.parse(td);
+        }catch(Exception e){
             toDate = null;
         }
 
-
-        for(int i=0; i<displayList.size(); i++)
+        for(int i=(displayList.size()-1); i>=0; i--)
         {
-            if((fromDate != null && displayList.get(i).getDateTime().before(fromDate)) || (toDate != null && displayList.get(i).getDateTime().after(toDate)) || ((ct != null && !ct.isEmpty()) && !displayList.get(i).getDescription().contains(ct)))
+            Act a = displayList.get(i);
+            if((fromDate != null && a.getDateTime().before(fromDate))
+                    || (toDate != null && a.getDateTime().after(toDate))
+                    || ((ct != null && !ct.equals("")) && !a.getDescription().contains(ct)))
             {
                 displayList.remove(i);
             }
@@ -132,7 +139,7 @@ public class Table extends AppCompatActivity {
     }
 
     public void openCalculationsPage(){
-        Intent toStats = new Intent(getApplicationContext(), Calculations.class);
+        Intent toStats = new Intent(this, Calculations.class);
 
 
         Log.e("JKERR", "putting TYPE as " + ty);
@@ -142,7 +149,7 @@ public class Table extends AppCompatActivity {
         toStats.putExtra("tFROM_DATE",fd);
         toStats.putExtra("tTO_DATE",td);
 
-        startActivity(toStats);
+        this.startActivity(toStats);
     }
 
     @Override
