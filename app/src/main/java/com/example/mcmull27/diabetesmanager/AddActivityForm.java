@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,8 +34,11 @@ public class AddActivityForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_activity_form);
 
+        //load libraries for sqlcipher
+        SQLiteDatabase.loadLibs(this);
+
         //initialize database manager
-        db = new DatabaseManager(this);
+        db = DatabaseManager.getInstance(this);
 
 
         //initialize buttons and handlers
