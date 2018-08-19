@@ -37,7 +37,7 @@ public class Table extends AppCompatActivity {
     public static final String tTO_DATE = "com.example.mcmull27.diabetesmanager.tTO_DATE";;
     public static final String tTYPE = "com.example.mcmull27.diabetesmanager.tTYPE";
     public static final String tCONTAINS = "com.example.mcmull27.diabetesmanager.tCONTAINS";
-    public static final String tBUNDLE = "com.example.mcmull27.diabetesmanager.tBUNDLE";
+    public static final String tARRAY = "com.example.mcmull27.diabetesmanager.tARRAY";
 
     List<Act> displayList;
     QueryAdaptor adapter;
@@ -60,7 +60,6 @@ public class Table extends AppCompatActivity {
         //query the db
         db = new DatabaseManager(this);
         actList = db.selectAllActs();
-        //db.queryActs(ty,td,fd);
 
         displayList = new ArrayList<>();
 
@@ -135,14 +134,21 @@ public class Table extends AppCompatActivity {
     {
         ArrayList<Act> x = new ArrayList<Act>();
 
-        x.addAll(displayList);
-
         Intent toGraph = new Intent(this, Graph.class);
 
-        toGraph.putExtra("tTYPE",this.ty);
-        toGraph.putExtra("tFROM_DATE",this.fd);
-        toGraph.putExtra("tTO_DATE",this.td);
-        toGraph.putExtra("ARRAYLIST", x);
+        x.addAll(displayList);
+        Intent intent = getIntent();
+        String _ty = intent.getStringExtra(TYPE);
+
+        String _fd = intent.getStringExtra(FROM_DATE);
+        String _td = intent.getStringExtra(TO_DATE);
+        String _ct = intent.getStringExtra(CONTAINS);
+
+        toGraph.putExtra(tTYPE,_ty);
+        toGraph.putExtra(tFROM_DATE,_fd);
+        toGraph.putExtra(tTO_DATE,_td);
+        toGraph.putExtra(tCONTAINS, _ct);
+        toGraph.putExtra(tARRAY, x);
 
         startActivity(toGraph);
     }
