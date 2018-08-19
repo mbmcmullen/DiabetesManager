@@ -166,10 +166,5 @@ public class StatisticsPage extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        db.close();
-    }
 
 }
