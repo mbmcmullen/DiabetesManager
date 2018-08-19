@@ -134,7 +134,6 @@ public class Table extends AppCompatActivity {
     public void openGraphPage()
     {
         ArrayList<Act> x = new ArrayList<Act>();
-        Bundle b = new Bundle();
 
         x.addAll(displayList);
 
@@ -143,7 +142,7 @@ public class Table extends AppCompatActivity {
         toGraph.putExtra("tTYPE",this.ty);
         toGraph.putExtra("tFROM_DATE",this.fd);
         toGraph.putExtra("tTO_DATE",this.td);
-        b.putParcelableArrayList("ARRAYLIST", x);
+        toGraph.putExtra("ARRAYLIST", x);
 
         startActivity(toGraph);
     }

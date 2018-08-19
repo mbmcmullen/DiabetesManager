@@ -36,7 +36,7 @@ public class Graph extends AppCompatActivity {
         ty_txt = i.getStringExtra(TYPE);
         fd_txt = i.getStringExtra(FROM_DATE);
         td_txt = i.getStringExtra(TO_DATE);
-        actList = (ArrayList<Act>) i.getParcelableArrayListExtra("ARRAYLIST");
+        actList = (ArrayList<Act>) i.getSerializableExtra("ARRAYLIST");
 
 
         if(ty_txt.equalsIgnoreCase(Act.BGL) || ty_txt.equalsIgnoreCase(Act.MEDICATION))
