@@ -1,6 +1,7 @@
 package com.example.mcmull27.diabetesmanager;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +37,7 @@ public class Table extends AppCompatActivity {
     public static final String tTO_DATE = "com.example.mcmull27.diabetesmanager.tTO_DATE";;
     public static final String tTYPE = "com.example.mcmull27.diabetesmanager.tTYPE";
     public static final String tCONTAINS = "com.example.mcmull27.diabetesmanager.tCONTAINS";
+    public static final String tBUNDLE = "com.example.mcmull27.diabetesmanager.tBUNDLE";
 
     List<Act> displayList;
     QueryAdaptor adapter;
@@ -57,7 +60,7 @@ public class Table extends AppCompatActivity {
         //query the db
         db = new DatabaseManager(this);
         actList = db.selectAllActs();
-                //db.queryActs(ty,td,fd);
+        //db.queryActs(ty,td,fd);
 
         displayList = new ArrayList<>();
 
@@ -72,12 +75,20 @@ public class Table extends AppCompatActivity {
 
         try{
             fromDate = format.parse(fd);
-            toDate = format.parse(td);
         }catch(Exception e){
             fromDate = null;
-            toDate = null;
+            Log.e("JKERR", "in table, error for date format: " + e.getLocalizedMessage());
         }
 
+        try{
+            toDate = format.parse(td);
+        }catch(Exception e){
+            toDate = null;
+            Log.e("JKERR", "in table, error for date format: " + e.getLocalizedMessage());
+        }
+
+        Log.e("JKERR", "fromDate in Table: " + fromDate);
+        Log.e("JKERR", "toDate in table: " + toDate);
 
         for(int i=0; i<displayList.size(); i++)
         {
@@ -115,34 +126,48 @@ public class Table extends AppCompatActivity {
         findViewById(R.id.stats).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               openCalculationsPage();
+                openCalculationsPage();
             }
         });
     }
 
     public void openGraphPage()
     {
+        ArrayList<Act> x = new ArrayList<Act>();
+        Bundle b = new Bundle();
+
+        x.addAll(displayList);
+
         Intent toGraph = new Intent(this, Graph.class);
 
         toGraph.putExtra("tTYPE",this.ty);
         toGraph.putExtra("tFROM_DATE",this.fd);
         toGraph.putExtra("tTO_DATE",this.td);
+        b.putParcelableArrayList("ARRAYLIST", x);
 
         startActivity(toGraph);
     }
 
     public void openCalculationsPage(){
-        Intent toStats = new Intent(getApplicationContext(), Calculations.class);
+        Intent toCalc = new Intent(getApplicationContext(), Calculations.class);
 
 
-        Log.e("JKERR", "putting TYPE as " + ty);
-        Log.e("JKERR", "putting FROM_DATE as " + fd);
-        Log.e("JKERR", "putting TO_DATE as " + td);
-        toStats.putExtra("tTYPE",ty);
-        toStats.putExtra("tFROM_DATE",fd);
-        toStats.putExtra("tTO_DATE",td);
+        Intent intent = getIntent();
+        String _ty = intent.getStringExtra(TYPE);
 
-        startActivity(toStats);
+        String _fd = intent.getStringExtra(FROM_DATE);
+        String _td = intent.getStringExtra(TO_DATE);
+        String _ct = intent.getStringExtra(CONTAINS);
+
+        Log.e("JKERR", "putting TYPE as " + _ty);
+        Log.e("JKERR", "putting FROM_DATE as " + _fd);
+        Log.e("JKERR", "putting TO_DATE as " + _td);
+        toCalc.putExtra(tTYPE,_ty);
+        toCalc.putExtra(tFROM_DATE,_fd);
+        toCalc.putExtra(tTO_DATE,_td);
+        toCalc.putExtra(tCONTAINS, _ct);
+
+        startActivity(toCalc);
     }
 
     @Override

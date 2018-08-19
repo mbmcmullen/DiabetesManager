@@ -11,7 +11,7 @@ public class Act{
     public static final String EXERCISE = "EXERCISE";
     public static final String MEDICATION = "MEDICATION";
     public static final String BGL = "BGL";
-    public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm";
+    public static final String DATE_FORMAT = "MM/dd/yyyy";
 
     private int id;
     private String type;
