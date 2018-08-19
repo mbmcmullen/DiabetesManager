@@ -20,11 +20,15 @@ public class Regimen {
 
     public Regimen(Context ctx){
         // Getting regimen from the db
-//        dbMan = new DatabaseManager(ctx);
-//        List<Act> allActs = dbMan.selectAllRegItems();
+        dbMan = new DatabaseManager(ctx);
+        update();
+    }
+
+    public void update() {
+        List<Act> allActs = dbMan.selectAllRegItems();
 
         // test regimen
-        List<Act> allActs = _testList;
+//        List<Act> allActs = _testList;
 
         Collections.sort(allActs, new Comparator<Act>() {
             public int compare(Act o1, Act o2) {
@@ -96,7 +100,7 @@ public class Regimen {
             new Act(5, Act.EXERCISE, "Walk to lunch", 2.0, new Date(2018, 8, 4, 12, 0).toString()),
             new Act(6, Act.BGL, "Midday reading", 0, new Date(2018, 8, 4, 12, 30).toString()),
             new Act(7, Act.DIET, "Lunch", 2.0, new Date(2018, 8, 4, 12, 30).toString()),
-            new Act(8, Act.BGL, "afternoon Reading", 0, new Date(2018, 8, 4, 15, 0).toString()),
+            new Act(8, Act.BGL, "afternoon Reading", 0, new Date(2018, 8, 4, 15, 10).toString()),
             new Act(9, Act.DIET, "Dinner", 2.0, new Date(2018, 8, 4, 18, 0).toString())
     ));
 

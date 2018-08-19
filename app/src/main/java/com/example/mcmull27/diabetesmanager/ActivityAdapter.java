@@ -1,5 +1,7 @@
 package com.example.mcmull27.diabetesmanager;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,11 +20,17 @@ public class ActivityAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<Act> items;
+    private DatePickerDialog datePicker;
+    private TimePickerDialog timePicker;
 
     private final int BGL = 0, DIET = 1, EXERCISE = 2, MEDICATION = 3;
 
     public ActivityAdapter(List<Act> items){
         this.items = items;
+        this.timePicker = timePicker;
+        this.datePicker = datePicker;
+
+
     }
 
     @Override
@@ -119,7 +127,8 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+//                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+                    items.get(getAdapterPosition()).setDate(editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
                 }
             });
@@ -133,7 +142,8 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+//                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+                    items.get(getAdapterPosition()).setTime(editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
                 }
             });
@@ -196,7 +206,8 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+//                    items.get(getAdapterPosition()).setTimestamp(editable.toString()+" "+time.getText().toString());
+                    items.get(getAdapterPosition()).setDate(editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" date", editable.toString());
                 }
             });
@@ -210,7 +221,8 @@ public class ActivityAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+//                    items.get(getAdapterPosition()).setTimestamp(date.getText().toString()+" "+editable.toString());
+                    items.get(getAdapterPosition()).setTime(editable.toString());
                     Log.d("DATA UPDATE:"+getAdapterPosition()+" time", editable.toString());
                 }
             });

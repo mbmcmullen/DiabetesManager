@@ -38,13 +38,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sqlcreate = "create table " + TABLE_ACTIVITIES + " (" + ID;
         sqlcreate += " integer primary key autoincrement, "+ TYPE + " text, ";
-        sqlcreate +=  DESCRIPTION+ " text, " + AMOUNT + " text, ";
-        sqlcreate +=  TIMESTAMP+ " text)";
+        sqlcreate +=  DESCRIPTION + " text, " + AMOUNT + " real, ";
+        sqlcreate +=  TIMESTAMP + " DATETIME)";
         db.execSQL(sqlcreate);
 
         String sqlcreateReg = "create table " + TABLE_REGIMEN +" (" + ID;
         sqlcreateReg += " integer primary key autoincrement, "+ TYPE + " text, ";
-        sqlcreateReg +=  DESCRIPTION+ " text, " + AMOUNT + " text, ";
+        sqlcreateReg +=  DESCRIPTION+ " text, " + AMOUNT + " real, ";
         sqlcreateReg +=  TIMESTAMP+ " text)";
         db.execSQL(sqlcreateReg);
     }
@@ -77,8 +77,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String sqlInsert = "insert into " + TABLE_REGIMEN + " " + ACTIVITY_COLUMNS;
         sqlInsert+= " values(" + escape(a.getType());
         sqlInsert+= ", " + escape(a.getDescription());
-        sqlInsert+= ", " + escape("" + a.getAmount());
+        sqlInsert+= ", " +  a.getAmount();
         sqlInsert+=", " + escape(a.getTimestamp());
+        sqlInsert+=")";
         db.execSQL(sqlInsert);
         db.close();
     }

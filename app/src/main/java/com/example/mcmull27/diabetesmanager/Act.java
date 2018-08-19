@@ -11,7 +11,8 @@ public class Act{
     public static final String EXERCISE = "EXERCISE";
     public static final String MEDICATION = "MEDICATION";
     public static final String BGL = "BGL";
-    public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm";
+//    public static final String DATE_FORMAT = "MM/dd/yyyy hh:mm";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private int id;
     private String type;
@@ -29,6 +30,9 @@ public class Act{
         if(type.equals(BGL)){
             description = "BGL Reading";
         }
+        dateParser = new SimpleDateFormat(DATE_FORMAT); // TODO: make sure this is the correct format
+        prettyDatePrinter = new SimpleDateFormat(PRETTY_DATE);
+        dateTime = new Date();
     }
     public Act(int id, String type, String description, double amount, String timestamp){
         this.id = id;
@@ -87,6 +91,42 @@ public class Act{
 
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public void setTime(String time) {
+        SimpleDateFormat parser = new SimpleDateFormat("hh:mm");
+        Date t;
+        try {
+            t = parser.parse(time);
+        } catch(Exception e) {
+            Log.e("ACT", "Failed to set time : " + time, e);
+            dateTime.setHours(0);
+            dateTime.setMinutes(0);
+            timestamp = dateParser.format(dateTime);
+            return;
+        }
+        dateTime.setHours(t.getHours());
+        dateTime.setMinutes(t.getMinutes());
+        timestamp = dateParser.format(dateTime);
+    }
+
+    public void setDate(String date) {
+        SimpleDateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+        Date d;
+        try {
+            d = parser.parse(date);
+        } catch(Exception e) {
+            Log.e("ACT", "Failed to set date : " + date, e);
+//            dateTime.setDate(0);
+//            dateTime.setMonth(0);
+//            dateTime.setYear(0);
+//            timestamp = dateParser.format(dateTime);
+            return;
+        }
+        dateTime.setDate(d.getDate());
+        dateTime.setMonth(d.getMonth());
+        dateTime.setYear(d.getYear());
+        timestamp = dateParser.format(dateTime);
     }
 
     @Override

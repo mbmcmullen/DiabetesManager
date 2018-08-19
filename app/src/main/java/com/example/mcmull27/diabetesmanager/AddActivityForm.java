@@ -107,8 +107,17 @@ public class AddActivityForm extends AppCompatActivity {
             for(int i= acts.size()-1; i>=0;i--){
                 Act cur = acts.get(i);
                 if(valid(cur)){
-                    Log.d("adding", cur.getAmount()+" "+cur.getDescription()+" "+cur.getTimestamp()+" "+cur.getAmount());
-                    db.insertAct(cur);
+                    Date now = new Date();
+                    if (cur.getDateTime().compareTo(now) > 0) {
+                        // activity
+                        Log.d("adding", "Activity[" + cur.getAmount()+" "+cur.getDescription()+" "+cur.getTimestamp()+" "+cur.getAmount() + "] to Act Table");
+                        db.insertAct(cur);
+                    } else {
+                        // regiment (to do)
+                        Log.d("adding", "Activity[" + cur.getAmount()+" "+cur.getDescription()+" "+cur.getTimestamp()+" "+cur.getAmount() + "] to Reg Table");
+//                        db.insertAct(cur);
+                        db.insertRegItem(cur);
+                    }
                     acts.remove(i);
                     adapter.notifyItemRemoved(i);
                 }else{
