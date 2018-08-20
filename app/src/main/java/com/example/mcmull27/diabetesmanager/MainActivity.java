@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //check to see if user is logged in
         SharedPreferences myprefs = getSharedPreferences("Preferences",MODE_PRIVATE);
         loggedIn = myprefs.getBoolean("loggedIn", false);

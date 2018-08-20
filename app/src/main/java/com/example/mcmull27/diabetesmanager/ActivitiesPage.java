@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.util.ArrayList;
 
 
@@ -21,7 +23,10 @@ public class ActivitiesPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activities_page);
 
-        db = new DatabaseManager(this);
+        //load libraries for sqlcipher
+        SQLiteDatabase.loadLibs(this);
+
+        db = DatabaseManager.getInstance(this);
         ArrayList<Act> recent = db.selectAllActs();
 
 

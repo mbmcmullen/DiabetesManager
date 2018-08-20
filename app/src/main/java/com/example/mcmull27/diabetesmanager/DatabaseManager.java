@@ -3,8 +3,8 @@ package com.example.mcmull27.diabetesmanager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -17,12 +17,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class DatabaseManager extends SQLiteOpenHelper {
+    //sqlcipher
+    private static DatabaseManager instance;
+    public static final String PASS_PHRASE = "password123";     //password for sqlcipher
+
     private static final String DATABASE_NAME = "diabetesManagerDB";
     private static final int DATABASE_VERSION = 1;
     //table
     private static final String TABLE_ACTIVITIES = "activities";
     private static final String TABLE_REGIMEN = "regimen";
-    private static final String TABLE_USER = "user";
     //columns
     private static final String ID = "id";
     private static final String TYPE = "type";
@@ -30,6 +33,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String TIMESTAMP = "timestamp";
     private static final String AMOUNT = "amount";
     private static final String ACTIVITY_COLUMNS = "(" + TextUtils.join(", ", Arrays.asList(TYPE, DESCRIPTION, AMOUNT, TIMESTAMP)) + ")";
+
+    static public synchronized DatabaseManager getInstance(Context context){
+        if(instance == null) {
+            instance = new DatabaseManager(context);
+        }
+        return instance;
+    }
 
     public DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,7 +72,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void insertAct(Act a){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String sqlInsert = "insert into " + TABLE_ACTIVITIES + " " + ACTIVITY_COLUMNS;
         sqlInsert+= " values(" + escape(a.getType());
         sqlInsert+= ", " + escape(a.getDescription());
@@ -74,7 +84,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void insertRegItem(Act a){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String sqlInsert = "insert into " + TABLE_REGIMEN + " " + ACTIVITY_COLUMNS;
         sqlInsert+= " values(" + escape(a.getType());
         sqlInsert+= ", " + escape(a.getDescription());
@@ -86,7 +96,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void updateActById(int id, String desc, double amt, Date time){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String sqlUpdate = "update "+ TABLE_ACTIVITIES;
         sqlUpdate +=" set "+DESCRIPTION +"="+ desc+", ";
         sqlUpdate += AMOUNT+"="+amt+", ";
@@ -97,7 +107,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void updateRegItemById(int id, String desc, double amt, Date time){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String sqlUpdate = "update "+ TABLE_REGIMEN;
         sqlUpdate +=" set "+DESCRIPTION +"="+ desc+", ";
         sqlUpdate += AMOUNT+"="+amt+", ";
@@ -108,7 +118,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public Act selectActById(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = instance.getReadableDatabase(PASS_PHRASE);
         String sqlSelect = "select from "+TABLE_ACTIVITIES;
         sqlSelect+= " where "+ID+"="+id;
         Cursor cursor = db.rawQuery(sqlSelect,null);
@@ -126,7 +136,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public Act selectRegItemById(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = instance.getReadableDatabase(PASS_PHRASE);
         String sqlSelect = "select from "+TABLE_REGIMEN;
         sqlSelect+= " where "+ID+"="+id;
         Cursor cursor = db.rawQuery(sqlSelect,null);
@@ -144,7 +154,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void deleteActByID(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String sqlDelete = "delete from " + TABLE_ACTIVITIES;
         sqlDelete += " where " + ID + " = " + id;
 
@@ -153,7 +163,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void deleteRegItemByID(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String sqlDelete = "delete from " + TABLE_REGIMEN;
         sqlDelete += " where " + ID + " = " + id;
 
@@ -163,7 +173,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public ArrayList<Act> selectAllActs(){
         ArrayList<Act> activities = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
 
         String sqlQuery = "select * from " + TABLE_ACTIVITIES;
         Cursor cursor = db.rawQuery(sqlQuery, null);
@@ -186,7 +196,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public ArrayList<Act> selectAllRegItems(){
         ArrayList<Act> activities = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
 
         String sqlQuery = "select * from " + TABLE_REGIMEN;
         Cursor cursor = db.rawQuery(sqlQuery, null);
@@ -209,7 +219,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public List<Act> queryActs(String type, String toDate, String fromDate){
         ArrayList<Act> stats = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = instance.getWritableDatabase(PASS_PHRASE);
         String dateClause, typeClause;
 
         //open query logic

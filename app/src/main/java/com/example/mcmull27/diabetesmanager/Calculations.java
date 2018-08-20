@@ -1,16 +1,14 @@
 package com.example.mcmull27.diabetesmanager;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +29,7 @@ public class Calculations extends AppCompatActivity {
     private DatabaseManager db;
     List<Act> displayList;
     Date fromDateD, toDateD;
+    CalcFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,12 @@ public class Calculations extends AppCompatActivity {
         td = i.getStringExtra(tTO_DATE);
         ct = i.getStringExtra(tCONTAINS);
 
-        calculations();
+
+        FragmentManager manager = getFragmentManager();
+        fragment = (CalcFragment) manager.findFragmentById(R.id.calcFragment);
+
+
+        query();
 
         //button to go to graph screen
         Button graph = (Button) findViewById(R.id.graph);
@@ -70,109 +74,58 @@ public class Calculations extends AppCompatActivity {
                 openQueryPage();
             }
         });
-
-        //button to go back to main stats screen
-        Button back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
      }
 
-     //calculates the mean and standard deviance
-     public void calculations()
-     {
-         db = new DatabaseManager(this);
+     //query the database and call Fragment
+    public void query()
+    {
+        db = new DatabaseManager(this);
 
         List<Act> actList;
 
+        Log.e("JKERR", "0");
+        actList = db.selectAllActs();
 
-         int a1 =0, a2 = 0, a3 = 0;
+        Log.e("JKERR", "1");
+        displayList = new ArrayList<>();
 
-         int count = 3;
-         double sum = 0;
-         double mean = 0;
-         double stdDev = 0;
+        Log.e("JKERR", "actList size: " + actList.size());
 
-         try {
-             Log.e("JKERR", "0");
-             actList = db.selectAllActs();
+        //filter types
+        for(int i=0; i<actList.size();i++){
+            Act e = actList.get(i);
 
-             Log.e("JKERR", "1");
-             displayList = new ArrayList<>();
+            if(e.getType().equals(ty)){
+             displayList.add(e);
+            }
+        }
 
-             Log.e("JKERR", "actList size: " + actList.size());
+        SimpleDateFormat format = new SimpleDateFormat("mm/dd/yyyy");
 
-             //filter types
-             for(int i=0; i<actList.size();i++){
-                 Act e = actList.get(i);
+        try{
+         fromDateD = format.parse(fd);
+        }catch(Exception e){
+         fromDateD = null;
+        }
+        try{
+            toDateD = format.parse(td);
+        }catch(Exception e){
+            toDateD = null;
+        }
+        for(int i=displayList.size()-1; i>=0; i--)
+        {
+            if((fromDateD != null && displayList.get(i).getDateTime().before(fromDateD))
+                    || (toDateD != null && displayList.get(i).getDateTime().after(toDateD))
+                    || ((ct != null && !ct.equals("")) && !displayList.get(i).getDescription().contains(ct)))
+            {
+             displayList.remove(i);
+            }
+        }
+        fragment.calculate(displayList);
+    }
 
-                 if(e.getType().equals(ty)){
-                     displayList.add(e);
-                 }
-             }
-
-             SimpleDateFormat format = new SimpleDateFormat(Act.DATE_FORMAT);
-
-             try{
-                 fromDateD = format.parse(fd);
-                 toDateD = format.parse(td);
-             }catch(Exception e){
-                 fromDateD = null;
-                 toDateD = null;
-             }
-
-             for(int i=0; i<displayList.size(); i++)
-             {
-                 if((fromDateD != null && displayList.get(i).getDateTime().before(fromDateD)) || (toDateD != null && displayList.get(i).getDateTime().after(toDateD)) || ((ct != null && !ct.isEmpty()) && !displayList.get(i).getDescription().contains(ct)))
-                 {
-                     displayList.remove(i);
-                 }
-             }
-
-             //calculate mean
-             for (int i = 0; i < displayList.size(); i++) {
-                 count++;
-                 sum += displayList.get(i).getAmount();
-                 Log.e("JKERR", "inside_mean_loop_amount: " + displayList.get(i).getAmount() + " \n\t\t\tsum: " + sum);
-             }
-
-             mean = sum / count;
-             Log.e("JKERR", "Mean: " + mean);
-
-             //calculate standard deviance
-             for (int i = 0; i < displayList.size(); i++) {
-                 stdDev += Math.pow(displayList.get(i).getAmount() - mean, 2);
-             }
-
-             Log.e("JKERR", "STD: " + stdDev);
-
-             //set text fields
-             TextView stdDev_res = (TextView) findViewById(R.id.stdDev_res);
-             stdDev_res.setText(Double.toString(stdDev));
-
-             TextView mean_res = (TextView) findViewById(R.id.mean_res);
-             mean_res.setText(Double.toString(mean));
-         }
-         //if error occurs, populate fields with ----
-         catch (Exception E)
-         {
-             TextView stdDev_res = (TextView) findViewById(R.id.stdDev_res);
-             stdDev_res.setText("----");
-
-             TextView mean_res = (TextView) findViewById(R.id.mean_res);
-             mean_res.setText("----");
-         }
-
-
-
-
-     }
-
-     public void openGraphPage()
-     {
+    public void openGraphPage()
+    {
          Intent toGraph = new Intent(this, Graph.class);
 
          toGraph.putExtra("TYPE",this.ty);
@@ -180,47 +133,17 @@ public class Calculations extends AppCompatActivity {
          toGraph.putExtra("TO_DATE",this.td);
 
          this.startActivity(toGraph);
-     }
+    }
 
-     public void openQueryPage()
-     {
+    public void openQueryPage()
+    {
          Intent toTable = new Intent(Calculations.this, Table.class);
          toTable.putExtra("TYPE",this.ty);
          toTable.putExtra("FROM_DATE",this.fd);
          toTable.putExtra("TO_DATE",this.td);
 
          this.startActivity(toTable);
-     }
-    @Override
-    public boolean onCreateOptionsMenu( Menu menu ) {
-        getMenuInflater( ).inflate( R.menu.menu_main, menu );
-        return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId( );
-        switch ( id ) {
-            case R.id.menu_Login:
-                Intent loginIntent
-                        = new Intent( this, SignIn.class );
-                this.startActivity( loginIntent );
-                return true;
-            case R.id.menu_Logout:              //currently does nothing
-                Toast.makeText(this, "Successfully Logged out",Toast.LENGTH_SHORT).show();
-                SharedPreferences prefs = getSharedPreferences("Preferences",MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = prefs.edit();
-                prefsEditor.putBoolean("loggedIn",false);
-                prefsEditor.commit();
-                Intent logoutIntent
-                        = new Intent( this, MainActivity.class );
-                this.startActivity( logoutIntent );
-                return true;
-            default:
-                return super.onOptionsItemSelected( item );
-        }
-    }
-
 
     @Override
     public void onBackPressed() {
