@@ -77,7 +77,7 @@ public class AddActivityForm extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        db = new DatabaseManager(this);
+        db = DatabaseManager.getInstance(this);
     }
 
     @Override

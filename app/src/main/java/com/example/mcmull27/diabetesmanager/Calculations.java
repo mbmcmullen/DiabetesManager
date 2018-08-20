@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,9 @@ public class Calculations extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculations);
+
+        //load libraries for sqlcipher
+        SQLiteDatabase.loadLibs(this);
 
         Intent i = getIntent();
 
@@ -79,7 +84,7 @@ public class Calculations extends AppCompatActivity {
      //query the database and call Fragment
     public void query()
     {
-        db = new DatabaseManager(this);
+        db = DatabaseManager.getInstance(this);
 
         List<Act> actList;
 
