@@ -22,6 +22,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //table
     private static final String TABLE_ACTIVITIES = "activities";
     private static final String TABLE_REGIMEN = "regimen";
+    private static final String TABLE_USER = "user";
     //columns
     private static final String ID = "id";
     private static final String TYPE = "type";
