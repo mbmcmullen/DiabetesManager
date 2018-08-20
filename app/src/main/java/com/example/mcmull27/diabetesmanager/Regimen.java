@@ -3,6 +3,8 @@ package com.example.mcmull27.diabetesmanager;
 import android.content.Context;
 import android.util.Log;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +22,11 @@ public class Regimen {
 
     public Regimen(Context ctx){
         // Getting regimen from the db
-        dbMan = new DatabaseManager(ctx);
+
+        //load libraries for sqlcipher
+        SQLiteDatabase.loadLibs(ctx);
+
+        dbMan = DatabaseManager.getInstance(ctx);
         update();
     }
 

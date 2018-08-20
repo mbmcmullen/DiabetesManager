@@ -226,4 +226,10 @@ Log.e("JKERR", "fromDate in Table: " + fromDate);
         Intent intent = new Intent(Table.this, StatisticsPage.class);
         this.startActivity(intent);
     }
+
+    @Override
+    public void onDestroy(){
+        db.close();
+        super.onDestroy();
+    }
 }
