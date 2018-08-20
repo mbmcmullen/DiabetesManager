@@ -1,12 +1,14 @@
 package com.example.mcmull27.diabetesmanager;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Act{
+public class Act implements Parcelable{
     public static final String DIET = "DIET";
     public static final String EXERCISE = "EXERCISE";
     public static final String MEDICATION = "MEDICATION";
@@ -50,6 +52,40 @@ public class Act{
         }
 
     }
+
+    protected Act(Parcel in) {
+        id = in.readInt();
+        type = in.readString();
+        description = in.readString();
+        amount = in.readDouble();
+        timestamp = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(type);
+        dest.writeString(description);
+        dest.writeDouble(amount);
+        dest.writeString(timestamp);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Act> CREATOR = new Creator<Act>() {
+        @Override
+        public Act createFromParcel(Parcel in) {
+            return new Act(in);
+        }
+
+        @Override
+        public Act[] newArray(int size) {
+            return new Act[size];
+        }
+    };
 
     public String getTimestamp() {
         return timestamp;

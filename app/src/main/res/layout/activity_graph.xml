@@ -7,6 +7,7 @@
     android:background="@color/backgroundColor"
     tools:context=".Graph">
 
+
     <Button
         android:id="@+id/stats"
         style="@style/buttonStyle"
@@ -29,5 +30,17 @@
         android:text="@string/list_button"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="362dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/displayGraph"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">>
+    </com.github.mikephil.charting.charts.BarChart>>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineGraph"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">>
+    </com.github.mikephil.charting.charts.LineChart>>
 
 </RelativeLayout>

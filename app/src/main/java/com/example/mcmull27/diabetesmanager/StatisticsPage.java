@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,8 +28,7 @@ public class StatisticsPage extends AppCompatActivity {
     public static final String TYPE = "com.example.mcmull27.diabetesmanager.TYPE";
     public static final String CONTAINS = "com.example.mcmull27.diabetesmanager.CONTAINS";
 
-    TextView fd, td, ct;
-    String td_txt, fd_txt,c_txt;
+    public EditText fd, td, ct;
     SimpleDateFormat format;
 
     @Override
@@ -108,8 +108,8 @@ public class StatisticsPage extends AppCompatActivity {
                         Toast.makeText(StatisticsPage.this, "Invalid From Date", Toast.LENGTH_SHORT).show();
                     }
                 }
+                openTablePage();
             }
-
 
         });
 
@@ -117,16 +117,36 @@ public class StatisticsPage extends AppCompatActivity {
 
     public void openTablePage()
     {
+        format = new SimpleDateFormat(Act.DATE_FORMAT);
         Intent toTable= new Intent(this, Table.class);
 
-        toTable.putExtra(FROM_DATE, fd_txt);
+
 
         Spinner ty = (Spinner) findViewById(R.id.activity_type_spinner);
         String ty_txt = ty.getSelectedItem().toString().toUpperCase();
-        toTable.putExtra(TYPE, ty_txt);
 
-        toTable.putExtra(TO_DATE, td_txt);
-        toTable.putExtra(CONTAINS, c_txt);
+
+        fd = (EditText) findViewById(R.id.fromText);
+        String _fd_txt = fd.getText().toString();
+
+        ct = (EditText) findViewById(R.id.keywordText);
+        String _c_txt = ct.getText().toString();
+
+        //handler for search button
+
+        td = (EditText) findViewById(R.id.toText);
+        String _td_txt = td.getText().toString();
+
+
+        toTable.putExtra(TYPE, ty_txt);
+        toTable.putExtra(FROM_DATE, _fd_txt);
+        toTable.putExtra(CONTAINS, _c_txt);
+        toTable.putExtra(TO_DATE, _td_txt);
+
+        Log.e("JKERR", "type from stats: " + _td_txt);
+        Log.e("JKERR", "fromDate from stats: " + _fd_txt);
+        Log.e("JKERR", "toDate from stats: " + _td_txt);
+        Log.e("JKERR", "contains from stats: " + _c_txt);
 
         startActivity(toTable);
     }
@@ -165,6 +185,8 @@ public class StatisticsPage extends AppCompatActivity {
         Intent intent = new Intent(StatisticsPage.this, MainActivity.class);
         this.startActivity(intent);
     }
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.mcmull27.diabetesmanager;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +43,7 @@ public class Table extends AppCompatActivity {
     public static final String tTO_DATE = "com.example.mcmull27.diabetesmanager.tTO_DATE";;
     public static final String tTYPE = "com.example.mcmull27.diabetesmanager.tTYPE";
     public static final String tCONTAINS = "com.example.mcmull27.diabetesmanager.tCONTAINS";
+    public static final String tARRAY = "com.example.mcmull27.diabetesmanager.tARRAY";
 
     List<Act> displayList;
     QueryAdaptor adapter;
@@ -66,7 +69,6 @@ public class Table extends AppCompatActivity {
         //query the db
         db = DatabaseManager.getInstance(this);
         actList = db.selectAllActs();
-                //db.queryActs(ty,td,fd);
 
         displayList = new ArrayList<>();
 
@@ -84,15 +86,24 @@ public class Table extends AppCompatActivity {
 
         }catch(Exception e){
             fromDate = null;
+            Log.e("JKERR", "in table, error for date format: " + e.getLocalizedMessage());
+        }
+
+        try{
+            toDate = format.parse(td);
+        }catch(Exception e){
 
         }
         try{
             toDate = format.parse(td);
         }catch(Exception e){
             toDate = null;
+            Log.e("JKERR", "in table, error for date format: " + e.getLocalizedMessage());
         }
 
-        for(int i=(displayList.size()-1); i>=0; i--)
+
+Log.e("JKERR", "fromDate in Table: " + fromDate);
+        Log.e("JKERR", "toDate in table: " + toDate);        for(int  i=(displayList.size()-1); i>=0; i--)
         {
             Act a = displayList.get(i);
             if((fromDate != null && a.getDateTime().before(fromDate))
@@ -131,32 +142,43 @@ public class Table extends AppCompatActivity {
         findViewById(R.id.stats).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               openCalculationsPage();
+                openCalculationsPage();
             }
         });
     }
 
     public void openGraphPage()
     {
+        ArrayList<Act> x = new ArrayList<Act>();
+
         Intent toGraph = new Intent(this, Graph.class);
 
-        toGraph.putExtra("tTYPE",this.ty);
-        toGraph.putExtra("tFROM_DATE",this.fd);
-        toGraph.putExtra("tTO_DATE",this.td);
+        x.addAll(displayList);
+        Intent intent = getIntent();
+        String _ty = intent.getStringExtra(TYPE);
+
+        String _fd = intent.getStringExtra(FROM_DATE);
+        String _td = intent.getStringExtra(TO_DATE);
+        String _ct = intent.getStringExtra(CONTAINS);
+
+        toGraph.putExtra(tTYPE,_ty);
+        toGraph.putExtra(tFROM_DATE,_fd);
+        toGraph.putExtra(tTO_DATE,_td);
+        toGraph.putExtra(tCONTAINS, _ct);
+        toGraph.putExtra(tARRAY, x);
 
         startActivity(toGraph);
     }
 
     public void openCalculationsPage(){
-        Intent toStats = new Intent(this, Calculations.class);
+        Intent toCalc = new Intent(this, Calculations.class);
 
+        Intent intent = getIntent();
+        String _ty = intent.getStringExtra(TYPE);
 
-        Log.e("JKERR", "putting TYPE as " + ty);
-        Log.e("JKERR", "putting FROM_DATE as " + fd);
-        Log.e("JKERR", "putting TO_DATE as " + td);
-        toStats.putExtra("tTYPE",ty);
-        toStats.putExtra("tFROM_DATE",fd);
-        toStats.putExtra("tTO_DATE",td);
+        String _fd = intent.getStringExtra(FROM_DATE);
+        String _td = intent.getStringExtra(TO_DATE);
+        String _ct = intent.getStringExtra(CONTAINS);
 
         this.startActivity(toStats);
     }
@@ -188,6 +210,15 @@ public class Table extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected( item );
         }
+        Log.e("JKERR", "putting TYPE as " + _ty);
+        Log.e("JKERR", "putting FROM_DATE as " + _fd);
+        Log.e("JKERR", "putting TO_DATE as " + _td);
+        toCalc.putExtra(tTYPE,_ty);
+        toCalc.putExtra(tFROM_DATE,_fd);
+        toCalc.putExtra(tTO_DATE,_td);
+        toCalc.putExtra(tCONTAINS, _ct);
+
+        startActivity(toCalc);
     }
 
     @Override
