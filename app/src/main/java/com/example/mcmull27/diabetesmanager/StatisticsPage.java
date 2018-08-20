@@ -1,8 +1,11 @@
 package com.example.mcmull27.diabetesmanager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,7 +23,7 @@ public class StatisticsPage extends AppCompatActivity {
 
     private DatabaseManager db;
     public static final String FROM_DATE = "com.example.mcmull27.diabetesmanager.FROM_DATE";
-    public static final String TO_DATE = "com.example.mcmull27.diabetesmanager.TO_DATE";;
+    public static final String TO_DATE = "com.example.mcmull27.diabetesmanager.TO_DATE";
     public static final String TYPE = "com.example.mcmull27.diabetesmanager.TYPE";
     public static final String CONTAINS = "com.example.mcmull27.diabetesmanager.CONTAINS";
 
@@ -126,6 +129,35 @@ public class StatisticsPage extends AppCompatActivity {
         toTable.putExtra(CONTAINS, c_txt);
 
         startActivity(toTable);
+    }
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu ) {
+        getMenuInflater( ).inflate( R.menu.menu_main, menu );
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId( );
+        switch ( id ) {
+            case R.id.menu_Login:
+                Intent loginIntent
+                        = new Intent( this, SignIn.class );
+                this.startActivity( loginIntent );
+                return true;
+            case R.id.menu_Logout:              //currently does nothing
+                Toast.makeText(this, "Successfully Logged out",Toast.LENGTH_SHORT).show();
+                SharedPreferences prefs = getSharedPreferences("Preferences",MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = prefs.edit();
+                prefsEditor.putBoolean("loggedIn",false);
+                prefsEditor.commit();
+                Intent logoutIntent
+                        = new Intent( this, MainActivity.class );
+                this.startActivity( logoutIntent );
+                return true;
+            default:
+                return super.onOptionsItemSelected( item );
+        }
     }
 
     @Override
