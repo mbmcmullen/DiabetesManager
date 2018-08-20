@@ -69,9 +69,9 @@ public class StatisticsPage extends AppCompatActivity {
         });
 
         //handler for search button
-        td = (TextView) findViewById(R.id.toText);
-        fd = (TextView) findViewById(R.id.fromText);
-        ct = (TextView) findViewById(R.id.keywordText);
+        td = (EditText) findViewById(R.id.toText);
+        fd = (EditText) findViewById(R.id.fromText);
+        ct = (EditText) findViewById(R.id.keywordText);
 
 
         format = new SimpleDateFormat("mm/dd/yyyy");
@@ -80,9 +80,9 @@ public class StatisticsPage extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                c_txt = ct.getText().toString();
-                fd_txt = fd.getText().toString();
-                td_txt = td.getText().toString();
+                String c_txt = ct.getText().toString();
+                String fd_txt = fd.getText().toString();
+                String td_txt = td.getText().toString();
 
                 if( fd_txt.equals("") && td_txt.equals("") ){openTablePage();
                 }else if( (!fd_txt.equals("")) && (!td_txt.equals("")) ){

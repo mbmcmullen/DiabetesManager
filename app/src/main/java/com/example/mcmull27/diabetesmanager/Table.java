@@ -165,7 +165,7 @@ Log.e("JKERR", "fromDate in Table: " + fromDate);
         toGraph.putExtra(tFROM_DATE,_fd);
         toGraph.putExtra(tTO_DATE,_td);
         toGraph.putExtra(tCONTAINS, _ct);
-        toGraph.putExtra(tARRAY, x);
+        toGraph.putParcelableArrayListExtra(tARRAY, x);
 
         startActivity(toGraph);
     }
@@ -180,7 +180,16 @@ Log.e("JKERR", "fromDate in Table: " + fromDate);
         String _td = intent.getStringExtra(TO_DATE);
         String _ct = intent.getStringExtra(CONTAINS);
 
-        this.startActivity(toStats);
+        Log.e("JKERR", "putting TYPE as " + _ty);
+        Log.e("JKERR", "putting FROM_DATE as " + _fd);
+        Log.e("JKERR", "putting TO_DATE as " + _td);
+        toCalc.putExtra(tTYPE,_ty);
+        toCalc.putExtra(tFROM_DATE,_fd);
+        toCalc.putExtra(tTO_DATE,_td);
+        toCalc.putExtra(tCONTAINS, _ct);
+
+        startActivity(toCalc);
+//        this.startActivity(toStats);
     }
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
@@ -210,15 +219,6 @@ Log.e("JKERR", "fromDate in Table: " + fromDate);
             default:
                 return super.onOptionsItemSelected( item );
         }
-        Log.e("JKERR", "putting TYPE as " + _ty);
-        Log.e("JKERR", "putting FROM_DATE as " + _fd);
-        Log.e("JKERR", "putting TO_DATE as " + _td);
-        toCalc.putExtra(tTYPE,_ty);
-        toCalc.putExtra(tFROM_DATE,_fd);
-        toCalc.putExtra(tTO_DATE,_td);
-        toCalc.putExtra(tCONTAINS, _ct);
-
-        startActivity(toCalc);
     }
 
     @Override

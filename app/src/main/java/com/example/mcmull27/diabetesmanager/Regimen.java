@@ -109,18 +109,18 @@ public class Regimen {
 
     // TODO : remove the following test data
         // Act(int id, String type, String description, double amount, String timestamp)
-    private List<Act> _testList = new ArrayList<>(Arrays.asList(
-            new Act(0, Act.EXERCISE, "Morning run", 2.0, new Date(2018, 8, 4, 6, 0).toString()),
-            new Act(1, Act.BGL, "Morning reading", 0, new Date(2018, 8, 4, 6, 30).toString()),
-            new Act(2, Act.DIET, "Breakfast", 2.0, new Date(2018, 8, 4, 6, 30).toString()),
-            new Act(3, Act.BGL, "Mid Morning Reading", 0, new Date(2018, 8, 4, 10, 0).toString()),
-            new Act(4, Act.DIET, "Morning Snack", 2.0, new Date(2018, 8, 4, 10, 0).toString()),
-            new Act(5, Act.EXERCISE, "Walk to lunch", 2.0, new Date(2018, 8, 4, 12, 0).toString()),
-            new Act(6, Act.BGL, "Midday reading", 0, new Date(2018, 8, 4, 12, 30).toString()),
-            new Act(7, Act.DIET, "Lunch", 2.0, new Date(2018, 8, 4, 12, 30).toString()),
-            new Act(8, Act.BGL, "afternoon Reading", 0, new Date(2018, 8, 4, 15, 10).toString()),
-            new Act(9, Act.DIET, "Dinner", 2.0, new Date(2018, 8, 4, 18, 0).toString())
-    ));
+//    private List<Act> _testList = new ArrayList<>(Arrays.asList(
+//            new Act(0, Act.EXERCISE, "Morning run", 2.0, new Date(2018, 8, 4, 6, 0).toString()),
+//            new Act(1, Act.BGL, "Morning reading", 0, new Date(2018, 8, 4, 6, 30).toString()),
+//            new Act(2, Act.DIET, "Breakfast", 2.0, new Date(2018, 8, 4, 6, 30).toString()),
+//            new Act(3, Act.BGL, "Mid Morning Reading", 0, new Date(2018, 8, 4, 10, 0).toString()),
+//            new Act(4, Act.DIET, "Morning Snack", 2.0, new Date(2018, 8, 4, 10, 0).toString()),
+//            new Act(5, Act.EXERCISE, "Walk to lunch", 2.0, new Date(2018, 8, 4, 12, 0).toString()),
+//            new Act(6, Act.BGL, "Midday reading", 0, new Date(2018, 8, 4, 12, 30).toString()),
+//            new Act(7, Act.DIET, "Lunch", 2.0, new Date(2018, 8, 4, 12, 30).toString()),
+//            new Act(8, Act.BGL, "afternoon Reading", 0, new Date(2018, 8, 4, 15, 10).toString()),
+//            new Act(9, Act.DIET, "Dinner", 2.0, new Date(2018, 8, 4, 18, 0).toString())
+//    ));
 
 
 
