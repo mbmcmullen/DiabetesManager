@@ -1,7 +1,11 @@
 package com.example.mcmull27.diabetesmanager;
 
+import android.app.AlarmManager;
+import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +13,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class PrescribedRegimen extends AppCompatActivity {
@@ -64,6 +76,20 @@ public class PrescribedRegimen extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(PrescribedRegimen.this, MainActivity.class);
         PrescribedRegimen.this.startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        Act a = reg.getActivities().get(0);
+        int day = a.getDateTime().getDate(),
+            month = a.getDateTime().getMonth(),
+            year = a.getDateTime().getYear(),
+            hour = a.getDateTime().getHours(),
+            min = a.getDateTime().getMinutes();
+
+        Scheduler.setReminder(this, NotificationReceiver.class, day, month, year, hour, min);
+
+        super.onDestroy();
     }
 
 
@@ -128,8 +154,10 @@ public class PrescribedRegimen extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             Log.d("RegActivity", "Completed Click Listener called for id: " + (int)view.getTag());
-                            reg.markCompleted((int) view.getTag());
-                            regAdapter.notifyDataSetChanged();
+                            AddActDialog dialog = new AddActDialog(PrescribedRegimen.this, reg.getById((int) view.getTag()));
+                            dialog.show();
+                            Window window = dialog.getWindow();
+                            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
                         }
                     });
                 }
@@ -149,5 +177,101 @@ public class PrescribedRegimen extends AppCompatActivity {
             return v;
         }
 
+    }
+
+
+    public class AddActDialog extends Dialog implements android.view.View.OnClickListener {
+
+        public PrescribedRegimen ctx;
+        public Dialog d;
+        public Button addBtn, cancelBtn;
+        public Act act;
+        public EditText desc, amount, date, time;
+
+        public AddActDialog(PrescribedRegimen ctx, Act act) {
+            super(ctx);
+            this.ctx = ctx;
+            this.act = act;
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            if (act.getType().equals(Act.BGL)) {
+                setContentView(R.layout.item_bgl);
+            } else {
+                setContentView(R.layout.item_act);
+            }
+
+            LinearLayout ll = (LinearLayout)findViewById(R.id.container);
+
+            addBtn = new Button(PrescribedRegimen.this);
+            addBtn.setText("Add");
+
+            cancelBtn = new Button(PrescribedRegimen.this);
+            cancelBtn.setText("Add");
+            ll.addView(cancelBtn);
+
+
+            addBtn.setOnClickListener(this);
+            cancelBtn.setOnClickListener(this);
+
+            date = (EditText) findViewById(R.id.item_date);
+            time = (EditText) findViewById(R.id.item_time);
+            desc = (EditText) findViewById(R.id.item_description);
+            amount = (EditText) findViewById(R.id.item_amount);
+
+            date.setText(act.getDate());
+            time.setText(act.getTime());
+            if (desc != null) {
+                desc.setText(act.getDescription());
+            }
+            amount.setText("" + act.getAmount());
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v.equals(cancelBtn)) {
+                dismiss();
+            }
+            Act a = new Act(act.getType());
+            a.setAmount(Double.parseDouble(amount.getText().toString()));
+            a.setDate(date.getText().toString());
+            a.setTime(time.getText().toString());
+            if (desc != null) {
+                a.setDescription(desc.getText().toString());
+            }
+
+            if (valid(a)) {
+                reg.insertAct(a);
+                reg.removeItem(act.getId());
+                Toast.makeText(PrescribedRegimen.this, "Activity Added", Toast.LENGTH_SHORT).show();
+                regAdapter.notifyDataSetChanged();
+                dismiss();
+            } else {
+                Toast.makeText(PrescribedRegimen.this, "Incomplete or invalid activity.", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+        private boolean valid(Act a){
+            if(a.getType().equals(Act.BGL)&&
+                    (a.getAmount()<70||a.getAmount()>350))return false;
+            else if(a.getAmount()==0) return false;
+
+            if(a.getDescription()=="") return false;
+
+            String timestamp = a.getTimestamp();
+            SimpleDateFormat format = new SimpleDateFormat(Act.DATE_FORMAT);
+            try{
+                a.setDateTime(format.parse(timestamp));
+            }catch(Exception e){
+                return false;
+            }
+            return true;
+        }
     }
 }

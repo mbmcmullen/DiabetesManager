@@ -100,8 +100,6 @@ public class Act{
             t = parser.parse(time);
         } catch(Exception e) {
             Log.e("ACT", "Failed to set time : " + time, e);
-            dateTime.setHours(0);
-            dateTime.setMinutes(0);
             timestamp = dateParser.format(dateTime);
             return;
         }
@@ -117,16 +115,22 @@ public class Act{
             d = parser.parse(date);
         } catch(Exception e) {
             Log.e("ACT", "Failed to set date : " + date, e);
-//            dateTime.setDate(0);
-//            dateTime.setMonth(0);
-//            dateTime.setYear(0);
-//            timestamp = dateParser.format(dateTime);
             return;
         }
         dateTime.setDate(d.getDate());
         dateTime.setMonth(d.getMonth());
         dateTime.setYear(d.getYear());
         timestamp = dateParser.format(dateTime);
+    }
+
+    public String getDate() {
+        SimpleDateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+        return parser.format(this.dateTime);
+    }
+
+    public String getTime() {
+        SimpleDateFormat parser = new SimpleDateFormat("hh:mm");
+        return parser.format(this.dateTime);
     }
 
     @Override

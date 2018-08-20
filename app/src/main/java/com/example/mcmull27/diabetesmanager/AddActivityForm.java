@@ -108,7 +108,7 @@ public class AddActivityForm extends AppCompatActivity {
                 Act cur = acts.get(i);
                 if(valid(cur)){
                     Date now = new Date();
-                    if (cur.getDateTime().compareTo(now) > 0) {
+                    if (cur.getDateTime().compareTo(now) <= 0) {
                         // activity
                         Log.d("adding", "Activity[" + cur.getAmount()+" "+cur.getDescription()+" "+cur.getTimestamp()+" "+cur.getAmount() + "] to Act Table");
                         db.insertAct(cur);

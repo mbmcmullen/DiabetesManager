@@ -58,20 +58,38 @@ public class Regimen {
     }
 
     private void saveToActivity(Act a) {
-//        dbMan.insertAct(a);
+        dbMan.insertAct(a);
         Log.d("REGIMEN", "Saved regimen item to completed activity: " + a);
     }
 
-    private Act deleteActivityId(int id){
-        Iterator<Act> it = activities.iterator();
-        for(Act e = it.next();it.hasNext();e = it.next()){
-            if(e.getId() == id){
-                activities.remove(e);
-//                break;
-                return e;
+    public void insertAct(Act a) {
+        dbMan.insertRegItem(a);
+    }
+
+    public Act getById(int i) {
+        Act a = null;
+        for (Act act: activities) {
+            if (act.getId() == i) {
+                return act;
             }
         }
         return null;
+    }
+
+
+    private Act deleteActivityId(int id){
+        Act a = null;
+        Iterator<Act> it = activities.iterator();
+        while(it.hasNext()) {
+            Act e = it.next();
+            if(e.getId() == id){
+                a = e;
+                activities.remove(e);
+                dbMan.deleteRegItemByID(id);
+//                break;
+            }
+        }
+        return a;
     }
 
     public void markCompleted(int id) {
